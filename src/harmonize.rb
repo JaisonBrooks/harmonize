@@ -36,6 +36,7 @@ end
 
 #### [ VARIBLES ] ####
 @app_name = "Harmonize"
+@app_version = "0.1"
 
 # General #
 @acceptible_types = %w(pics vids docs scripts archieves data code music)
@@ -68,37 +69,78 @@ end
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize(' TYPES ','white','black')} = #{colorize('pics, vids, docs, scripts, data, code, all and more  ', 'light green')}     |"
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize(' ARGUMENTS ','white','black')} = #{colorize('--to, --from, -from_all, --no_sort, --verbose, --help','light blue')} |"
+  opt.separator "|  #{colorize(' ARGUMENTS ','white','black')} = #{colorize('See paramaters below','light blue')}                                  |"
+  opt.separator "|                                                                      |"
+  opt.separator "|  #{colorize(' DEFAULTS ','white','black')}                                                          |"
+  opt.separator "|                                                                      |"
+  opt.separator "|  #{colorize(' SORT (-s)    :','white')} #{colorize('[ ON ]','cyan')}                                              |"
+  opt.separator "|  #{colorize(' INPUT (-i)   :','white')} #{colorize('[ Current Directory ]','cyan')}                               |"
+  opt.separator "|  #{colorize(' EXPORT (-e)  :','white')} #{colorize('[ Current Directory ]','cyan')}                               |"
+  opt.separator "|  #{colorize(' VERBOSE (-v) :','white')} #{colorize('[ Verbose ]','cyan')}                                         |"
+  opt.separator "|                                                                      |"
+  opt.separator "|  #{colorize(' EXAMPLES ','white','black')}                                                          |"
+  opt.separator "|                                                                      |"
+  opt.separator "|  #{colorize(' ~ : $','white')} #{colorize('harmonize','light purple')}                                                    |"
+  opt.separator "|                                                                      |"
+  opt.separator "|  #{colorize('This would use the current directory as the INPUT and EXPORT','light red')}        |"
+  opt.separator "|  #{colorize('it also is assuming you want ALL files harmonized and sorted.','light red')}       |"
+  opt.separator "|                                                                      |"
+  opt.separator "|  #{colorize(' ~ : $','white')} #{colorize('harmonize pics -i Downloads/ -e /Users/bob','light purple')}                   |"
+  opt.separator "|                                                                      |"
+  opt.separator "|  #{colorize('This would move all PICS files from ( Downloads/ ) to ','light red')}              |"
+  opt.separator "|  #{colorize('( /Users/bob/Pics ). Since SORT is on by default, ','light red')}                  |"
+  opt.separator "|  #{colorize('a directory matching the tag name (PICS) will be created and all','light red')}    |"
+  opt.separator "|  #{colorize('cooresponding files will be relocated here.','light red')}                         |"
+  opt.separator "|                                                                      |"
+  opt.separator "|  #{colorize(' ~ : $','white')} #{colorize('harmonize docs -i Downloads/ -e /Users/bob -r -v','light purple')}             |"
+  opt.separator "|                                                                      |"
+  opt.separator "|  #{colorize('Like the above example, all files from ( Downloads/ ), including ','light red')}   |"
+  opt.separator "|  #{colorize('all sub directories ( Downloads/blah, Downloads/random/blah, etc )','light red')}  |"
+  opt.separator "|  #{colorize('will be moved to ( /Users/bob/Docs ) and the console will output','light red')}    |"
+  opt.separator "|  #{colorize('extra information about what the script is doing.','light red')}                   |"
+  opt.separator "|                                                                      |"
+  opt.separator "|  #{colorize('You may run into duplicate, which will be skipped','light red')}                   |"
+  opt.separator "|  #{colorize('unless you include a ( -f, --force ) argument, which will override','light red')}  |"
+  opt.separator "|  #{colorize('all files where a duplicate file name exists.','light red')}                       |"
+  opt.separator "|                                                                      |"
+  opt.separator "|  #{colorize('(BE CAREFUL) there are no DO OVERs with (-f, --force)','red')}               |"
+  opt.separator "|                                                                      |"
+  opt.separator "|  #{colorize('More examples coming soon...','light purple')}                                        |"
+  opt.separator "|                                                                      |"
+  opt.separator "|                                                                      |"
+  opt.separator "|  #{colorize(' SCRIPT VERSION','white','black')} = #{colorize(@app_version, 'light purple')}                                               |"
   opt.separator "|                                                                      |"
   opt.separator "|----------------------------------------------------------------------|"
   opt.separator ""
+
+  opt.on("-i", "--input FOLDER_PATH", "#{colorize('To ', 'cyan')}(A path to the input directory)") do |input|
+    @options[:input] = input
+  end
+  
+  opt.on("-e", "--export FOLDER_PATH", "#{colorize('To ', 'cyan')}(A path where to move files to)") do |export|
+    @options[:export] = export
+  end
+  
+  opt.on("-f", "--force", "#{colorize('From ', 'cyan')}(Force mode will overwrite files if files with the same name exist (BE CAREFUL))") do
+    @options[:force] = true
+  end
+  
+  opt.on("-r", "--resursive", "#{colorize('From ', 'cyan')}(Resursive mode will look in all sub directories and harmonize these files too (BE CAREFUL)") do |from_all|
+    @options[:recursive_mode] = true
+  end
+  
+  opt.on("-n", "--no_sort", "#{colorize('No Sort ', 'cyan')}(Doesnt orangize files into their cooresponding tags folder name)") do
+    @options[:sort] = false
+  end
   
   opt.on("-h","--help","#{colorize('Help','cyan')} (show this help page)") do
       puts @opt_parser
       exit(0)
   end
     
-  opt.on("-v","--verbose","#{colorize('Verbose ', 'cyan')}(includes extra output while executing)") do
+  opt.on("-v","--verbose","#{colorize('Verbose ', 'cyan')}(Include extra console output text when executing)") do
       @options[:verbose] = true
-  end
-  
-  opt.on("-n", "--no_sort", "#{colorize('No Sort ', 'cyan')}(Doesnt orangize your files, only moves them to your TO folder)") do
-    @options[:sort] = false
-  end
-  
-  opt.on("-t", "--to FOLDER_PATH", "#{colorize('To ', 'cyan')}(move files here)") do |to|
-    @options[:to] = to
-  end
-  
-  opt.on("-f", "--from FOLDER_PATH", "#{colorize('From ', 'cyan')}(get files from this folder)") do |from|
-    @options[:from] = from
-    @options[:recursive_mode] = false
-  end
-  
-  opt.on("-F", "--from_all FOLDER_PATH", "#{colorize('From ', 'cyan')}(get files from this folder and all sub folders)\n\n|======================================================================|\n.\n") do |from_all|
-    @options[:from] = from_all
-    @options[:recursive_mode] = true
-  end
+  end  
   
 end
 @opt_parser.parse!
@@ -233,10 +275,16 @@ end
 def move(harmonize)
   return if harmonize.nil?
   
-  harmonize[:content].each_pair{|k,v| 
-    to_dir = get_directory_for_type(k, harmonize[:to])
-    pu "Moving #{v.count} (#{k.capitalize}) files to #{to_dir}" 
-    FileUtils.mv(v, to_dir, {:verbose => harmonize[:verbose]})
+  harmonize[:content].each_pair{|k,v|
+    if v.count == 0
+      pu "No (#{k.capitalize}) to move"
+      exit(0)
+    else
+      setup_directories(harmonize[:types], harmonize[:to])
+      to_dir = get_directory_for_type(k, harmonize[:to])
+      pu "Moving #{v.count} (#{k.capitalize}) files to #{to_dir}" 
+      FileUtils.mv(v, to_dir, {:verbose => harmonize[:verbose], :force => @options[:force]})
+    end
   }
 end
 #################
@@ -257,10 +305,9 @@ end
 @harmonize[:sort] = @options[:sort]
 @harmonize[:verbose] = @options[:verbose]
 
-# 2. Init Folders based on tags and where to store
-setup_directories(@harmonize[:types], @harmonize[:to])
+#setup_directories(@harmonize[:types], @harmonize[:to])
 
-# 3. Get Extensions of files we need to harmonize
+# 2. Get Extensions of files we need to harmonize
 @harmonize[:content] = get_files_by_types(@harmonize[:from], @harmonize[:types])
 
 # 4. Move
