@@ -42,5 +42,8 @@ Supported Params (subject to change):
 
 ![Alt text](/res/screenshot_params_harmonize.png?raw=true "Support Params")
 
+### Version
+0.2
+
 ### Author
 Jaison Brooks
