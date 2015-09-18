@@ -1,5 +1,5 @@
-# harmonize
-A ruby script that organizes your files quick and easy.
+# Harmonize
+A script that helps organizes your files quick and easy.
 
 ### Setup
 * Clone the Repo
