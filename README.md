@@ -27,10 +27,11 @@ Run the following command to view the help page which contains the supported fil
 harmonize -h
 ```
 
-An example of the help page :>
+General Info (subject to change):
+![Alt text](/res/screenshot_help.png?raw=true "General Info")
 
-You should expect to see the following help (subject to change):
-![Alt text](/res/screenshot.png?raw=true "Help page")
+Supported Params (subject to change):
+![Alt text](/res/screenshot_params.png?raw=true "Support Params")
 
 ### Author
 Jaison Brooks
