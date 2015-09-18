@@ -45,8 +45,8 @@ end
 # Options #
 @options = {}
 @options[:verbose] = false
-@options[:from] = Dir.pwd
-@options[:to] = Dir.pwd
+@options[:input] = Dir.pwd
+@options[:export] = Dir.pwd
 @options[:sort] = true
 ####
 
@@ -125,7 +125,7 @@ end
     @options[:force] = true
   end
   
-  opt.on("-r", "--resursive", "#{colorize('From ', 'cyan')}(Resursive mode will look in all sub directories and harmonize these files too (BE CAREFUL)") do |from_all|
+  opt.on("-r", "--resursive", "#{colorize('From ', 'cyan')}(Resursive mode will look in all sub directories and harmonize these files too (BE CAREFUL)") do
     @options[:recursive_mode] = true
   end
   
@@ -280,8 +280,8 @@ def move(harmonize)
       pu "No (#{k.capitalize}) to move"
       exit(0)
     else
-      setup_directories(harmonize[:types], harmonize[:to])
-      to_dir = get_directory_for_type(k, harmonize[:to])
+      setup_directories(harmonize[:types], harmonize[:export])
+      to_dir = get_directory_for_type(k, harmonize[:export])
       pu "Moving #{v.count} (#{k.capitalize}) files to #{to_dir}" 
       FileUtils.mv(v, to_dir, {:verbose => harmonize[:verbose], :force => @options[:force]})
     end
@@ -300,21 +300,21 @@ end
 
 # 1. Setup 
 @harmonize[:types] = get_type( !ARGV[0] ? '' : ARGV[0], @acceptible_types)
-@harmonize[:from] = @options[:from]
-@harmonize[:to] = @options[:to]
+@harmonize[:input] = @options[:input]
+@harmonize[:export] = @options[:export]
 @harmonize[:sort] = @options[:sort]
 @harmonize[:verbose] = @options[:verbose]
 
 #setup_directories(@harmonize[:types], @harmonize[:to])
 
 # 2. Get Extensions of files we need to harmonize
-@harmonize[:content] = get_files_by_types(@harmonize[:from], @harmonize[:types])
+@harmonize[:content] = get_files_by_types(@harmonize[:input], @harmonize[:types])
 
 # 4. Move
 move(@harmonize)
 
 # Finished :)
-pu "Now run `cd #{@harmonize[:to]}` and checkout you newely organized files :)"
+pu "Now run `cd #{@harmonize[:export]}` and checkout you newely organized files :)"
 
 
 
