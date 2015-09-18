@@ -39,7 +39,7 @@ end
 @app_version = "0.2"
 
 # General #
-@acceptible_types = %w(pics vids docs scripts archives data music)
+@acceptible_types = %w(pics vids docs scripts archives programs data music)
 ####
 
 # Options #
@@ -71,7 +71,7 @@ end
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize(' TYPES ','white','black')}                                                             |"
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize('[ pics, vids, docs, scripts, data, all and more to come ]', 'light green')}           |"
+  opt.separator "|  #{colorize('[ pics, vids, docs, scripts, data, programs, all and more to come ]', 'light green')} |"
   opt.separator "|                                                                      |"
   opt.separator "|  These are the supported file extensions:                            |"
   opt.separator "|                                                                      |"
@@ -92,6 +92,9 @@ end
   opt.separator "|                                                                      |"
   opt.separator "|   #{colorize(' data ','light green','black')}                                                             |"
   opt.separator "|     [ xml json sql csv ]                                             |"
+  opt.separator "|                                                                      |"
+  opt.separator "|   #{colorize(' programs ','light green','black')}                                                         |"
+  opt.separator "|     [ deb iso dmg exe app pkg ]                                      |"
   opt.separator "|                                                                      |"
   opt.separator "|   #{colorize(' archives ','light green','black')}                                                         |"
   opt.separator "|     [ zip 7z tar tar.gz tgz gzip rar ]                               |"
@@ -238,10 +241,8 @@ def get_exts(type)
     #   %w(html css java scss less)
     when "data"
       %w(xml json sql csv)
-      #when "fonts"
-      #%w(ttf woeff)
-      #when "config"
-      #%w(conf)
+    when "programs"
+      %w(deb iso dmg exe app pkg)
     when "archives"
       %w(zip 7z tar tar.gz tgz gzip rar)
     else
