@@ -36,10 +36,10 @@ end
 
 #### [ VARIBLES ] ####
 @app_name = "Harmonize"
-@app_version = "0.1"
+@app_version = "0.2"
 
 # General #
-@acceptible_types = %w(pics vids docs scripts archieves data code music)
+@acceptible_types = %w(pics vids docs scripts archives data music)
 ####
 
 # Options #
@@ -67,16 +67,45 @@ end
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize(' USAGE ','white','black')} : #{colorize('$','white')} #{colorize('harmonize', 'light purple')} #{colorize('TYPES', 'light green')} #{colorize('ARGUMENTS', 'light blue')}                               |"
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize(' TYPES ','white','black')} = #{colorize('pics, vids, docs, scripts, data, code, all and more  ', 'light green')}     |"
+  opt.separator "| #{colorize('.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . ')} |"
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize(' ARGUMENTS ','white','black')} = #{colorize('See paramaters below','light blue')}                                  |"
+  opt.separator "|  #{colorize(' TYPES ','white','black')}                                                             |"
+  opt.separator "|                                                                      |"
+  opt.separator "|  #{colorize('[ pics, vids, docs, scripts, data, all and more to come ]', 'light green')}           |"
+  opt.separator "|                                                                      |"
+  opt.separator "|  These are the supported file extensions:                            |"
+  opt.separator "|                                                                      |"
+  opt.separator "|   #{colorize(' pics ','light green','black')}                                                             |"
+  opt.separator "|     [ jpg gif jpeg png svg tiff bmp psd webp ai ]                    |"
+  opt.separator "|                                                                      |"
+  opt.separator "|   #{colorize(' vids ','light green','black')}                                                             |"
+  opt.separator "|     [ mov mpeg avi mp4 ]                                             |"
+  opt.separator "|                                                                      |"
+  opt.separator "|   #{colorize(' docs ','light green','black')}                                                             |"
+  opt.separator "|     [ pdf xlsx xls docx ppt doc ]                                    |"
+  opt.separator "|                                                                      |"
+  opt.separator "|   #{colorize(' music ','light green','black')}                                                            |"
+  opt.separator "|     [ mp3 aac wav wma ]                                              |"
+  opt.separator "|                                                                      |"
+  opt.separator "|   #{colorize(' scripts ','light green','black')}                                                          |"
+  opt.separator "|     [ jsh rb js py php bat ]                                         |"
+  opt.separator "|                                                                      |"
+  opt.separator "|   #{colorize(' data ','light green','black')}                                                             |"
+  opt.separator "|     [ xml json sql csv ]                                             |"
+  opt.separator "|                                                                      |"
+  opt.separator "|   #{colorize(' archives ','light green','black')}                                                         |"
+  opt.separator "|     [ zip 7z tar tar.gz tgz gzip rar ]                               |"
+  opt.separator "|                                                                      |"
+  opt.separator "| #{colorize('.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . ')} |"
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize(' DEFAULTS ','white','black')}                                                          |"
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize(' SORT (-s)    :','white')} #{colorize('[ ON ]','cyan')}                                              |"
   opt.separator "|  #{colorize(' INPUT (-i)   :','white')} #{colorize('[ Current Directory ]','cyan')}                               |"
   opt.separator "|  #{colorize(' EXPORT (-e)  :','white')} #{colorize('[ Current Directory ]','cyan')}                               |"
-  opt.separator "|  #{colorize(' VERBOSE (-v) :','white')} #{colorize('[ Verbose ]','cyan')}                                         |"
+  opt.separator "|  #{colorize(' VERBOSE (-v) :','white')} #{colorize('[ OFF ]','cyan')}                                             |"
+  opt.separator "|                                                                      |"
+  opt.separator "| #{colorize('.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . ')} |"
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize(' EXAMPLES ','white','black')}                                                          |"
   opt.separator "|                                                                      |"
@@ -107,38 +136,43 @@ end
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize('More examples coming soon...','light purple')}                                        |"
   opt.separator "|                                                                      |"
+  opt.separator "| #{colorize('.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . ')} |"
   opt.separator "|                                                                      |"
+  opt.separator "|  #{colorize(' ARGUMENTS ','white','black')} = #{colorize('See paramaters below','light blue')}                                  |"
+  opt.separator "|                                                                      |"
+  opt.separator "| #{colorize('.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . ')} |"
+    opt.separator "|                                                                      |"
   opt.separator "|  #{colorize(' SCRIPT VERSION','white','black')} = #{colorize(@app_version, 'light purple')}                                               |"
   opt.separator "|                                                                      |"
   opt.separator "|----------------------------------------------------------------------|"
   opt.separator ""
 
-  opt.on("-i", "--input FOLDER_PATH", "#{colorize('To ', 'cyan')}(A path to the input directory)") do |input|
+  opt.on("-i", "--input FOLDER_PATH", "#{colorize('Input ', 'cyan')}- Where to get the files from") do |input|
     @options[:input] = input
   end
   
-  opt.on("-e", "--export FOLDER_PATH", "#{colorize('To ', 'cyan')}(A path where to move files to)") do |export|
+  opt.on("-e", "--export FOLDER_PATH", "#{colorize('Export ', 'cyan')}- Where to store the files") do |export|
     @options[:export] = export
   end
   
-  opt.on("-f", "--force", "#{colorize('From ', 'cyan')}(Force mode will overwrite files if files with the same name exist (BE CAREFUL))") do
+  opt.on("-f", "--force", "#{colorize('Force mode ', 'cyan')}- Overwrite any duplicate files (by name) { BE CAREFUL }!") do
     @options[:force] = true
   end
   
-  opt.on("-r", "--resursive", "#{colorize('From ', 'cyan')}(Resursive mode will look in all sub directories and harmonize these files too (BE CAREFUL)") do
+  opt.on("-r", "--resursive", "#{colorize('Resursive mode ', 'cyan')}- Include all sub directory files { BE CAREFUL }!") do
     @options[:recursive_mode] = true
   end
   
-  opt.on("-n", "--no_sort", "#{colorize('No Sort ', 'cyan')}(Doesnt orangize files into their cooresponding tags folder name)") do
+  opt.on("-o", "--organize", "#{colorize('Organize mode ', 'cyan')}- Organize files into dedicated folders (RECOMMEND)") do
     @options[:sort] = false
   end
   
-  opt.on("-h","--help","#{colorize('Help','cyan')} (show this help page)") do
+  opt.on("-h","--help","#{colorize('Help ','cyan')}- Show this help page") do
       puts @opt_parser
       exit(0)
   end
     
-  opt.on("-v","--verbose","#{colorize('Verbose ', 'cyan')}(Include extra console output text when executing)") do
+  opt.on("-v","--verbose","#{colorize('Verbose ', 'cyan')}- Include extra console output") do
       @options[:verbose] = true
   end  
   
@@ -199,17 +233,17 @@ def get_exts(type)
     when "music"
       %w(mp3 aac wav wma)
     when "scripts"
-      %w(sh rb js py php)
-    when "code"
-      %w(html css java scss less m so)
+      %w(sh rb js py php bat)
+    # when "code"
+    #   %w(html css java scss less)
     when "data"
       %w(xml json sql csv)
       #when "fonts"
       #%w(ttf woeff)
       #when "config"
       #%w(conf)
-    when "archieves"
-      %w(zip 7z tar tar.gz tgz tar.gz.md5 gzip rar tar.bz2)
+    when "archives"
+      %w(zip 7z tar tar.gz tgz gzip rar)
     else
       puts @opt_parser
       error("Incorrect type ( #{type} ) there is no extensions for this. Try again")
