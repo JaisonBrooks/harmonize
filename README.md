@@ -28,9 +28,11 @@ harmonize -h
 ```
 
 General Info (subject to change):
+
 ![Alt text](/res/screenshot_help_harmonize.png?raw=true "General Info")
 
 Supported Params (subject to change):
+
 ![Alt text](/res/screenshot_params_harmonize.png?raw=true "Support Params")
 
 ### Author
