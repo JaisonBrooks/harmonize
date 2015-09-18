@@ -18,15 +18,19 @@ sh ./init_harmonize.sh
 
 * Wait a moment for the script to complete
 
-Now you can begin executing Harmonize as long as ```/usr/local/bin``` exists and is in your $PATH
+The init_harmonize.sh creates a executable binary file and stores it here => /usr/loca/bin/harmonize.
 
 ### Usage
-Run the following to show the help page, this will show you how you can use the script.
+Run the following command to view the help page which contains the supported file types, arguments and examples on how to use the tool.
 
-```harmonize -h ```
+```
+harmonize -h
+```
+
+An example of the help page :>
 
 You should expect to see the following help (subject to change):
-![Alt text](/res/screen_1.png?raw=true "Help page")
+![Alt text](/res/screenshot.png?raw=true "Help page")
 
 ### Author
 Jaison Brooks
