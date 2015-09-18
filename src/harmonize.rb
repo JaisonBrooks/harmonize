@@ -153,7 +153,7 @@ def get_exts(type)
     when "vids"
       %w(mov mpeg avi mp4)
     when "docs"
-      %w(pdf xlxs docx ppt)
+      %w(pdf xlsx docx ppt)
     when "scripts"
       %w(sh rb js py php)
     when "code"
