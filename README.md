@@ -1,11 +1,13 @@
 # harmonize
 A ruby script that organizes your files quick and easy.
 
-### Instructions
+### Setup
 * Clone the Repo
-* Run the following command ```chmod u+x src/init_harmonize.sh```
-* Then run ```sh init_harmonize.sh ``` or however you execute shells scripts on your machine
-* Allow the script to run through and finish
+* Run the following commands (from the root of the project): 
+** ```cd src/```
+** ```chmod u+x init_harmonize.sh```
+** ```sh ./init_harmonize.sh```
+* Wait a moment for the script to complete
 
 Now you can begin executing Harmonize as long as ```/usr/local/bin``` exists and is in your $PATH
 
