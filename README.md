@@ -3,6 +3,11 @@ A ruby script that organizes your files quick and easy.
 
 ### Setup
 * Clone the Repo
+
+```
+git clone https://github.com/JaisonBrooks/harmonize.git
+```
+
 * Run the following commands (from the root of the project):
  
 ```
