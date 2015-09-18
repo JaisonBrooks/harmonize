@@ -9,5 +9,8 @@ A ruby script that organizes your files quick and easy.
 
 Now you can begin executing Harmonize as long as ```/usr/local/bin``` exists and is in your $PATH
 
+### Usage
+ $ ```harmonize -h ``` - shows the help, this will tell you how to use the script :)
+
 ### Author
 Jaison Brooks
