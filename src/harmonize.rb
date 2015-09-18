@@ -38,7 +38,7 @@ end
 @app_name = "Harmonize"
 
 # General #
-@acceptible_types = %w(pics vids docs scripts archieves data code)
+@acceptible_types = %w(pics vids docs scripts archieves data code music)
 ####
 
 # Options #
@@ -66,7 +66,7 @@ end
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize(' USAGE ','white','black')} : #{colorize('$','white')} #{colorize('harmonize', 'light purple')} #{colorize('TYPES', 'light green')} #{colorize('ARGUMENTS', 'light blue')}                               |"
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize(' TYPES ','white','black')} = #{colorize('pics, vids, docs, scripts, archieves, data, code, all', 'light green')}     |"
+  opt.separator "|  #{colorize(' TYPES ','white','black')} = #{colorize('pics, vids, docs, scripts, data, code, all and more  ', 'light green')}     |"
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize(' ARGUMENTS ','white','black')} = #{colorize('--to, --from, -from_all, --no_sort, --verbose, --help','light blue')} |"
   opt.separator "|                                                                      |"
@@ -154,16 +154,20 @@ def get_exts(type)
       %w(mov mpeg avi mp4)
     when "docs"
       %w(pdf xlsx xls docx ppt doc)
+    when "music"
+      %w(mp3 aac wav wma)
     when "scripts"
       %w(sh rb js py php)
     when "code"
       %w(html css java scss less m so)
     when "data"
       %w(xml json sql csv)
+      #when "fonts"
+      #%w(ttf woeff)
       #when "config"
       #%w(conf)
     when "archieves"
-      %w(zip 7z tar tar.gz tar.gz.md5 gzip rar)
+      %w(zip 7z tar tar.gz tgz tar.gz.md5 gzip rar tar.bz2)
     else
       puts @opt_parser
       error("Incorrect type ( #{type} ) there is no extensions for this. Try again")
