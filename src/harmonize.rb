@@ -149,19 +149,21 @@ end
 def get_exts(type)
   case type.to_s.downcase
     when "pics"
-      %w(jpg gif jpeg png tiff bmp)
+      %w(jpg gif jpeg png svg tiff bmp psd webp ai) 
     when "vids"
       %w(mov mpeg avi mp4)
     when "docs"
-      %w(pdf xlsx docx ppt)
+      %w(pdf xlsx xls docx ppt doc)
     when "scripts"
       %w(sh rb js py php)
     when "code"
-      %w(html css java scss less)
+      %w(html css java scss less m so)
     when "data"
-      %w(xml json sql)
+      %w(xml json sql csv)
+      #when "config"
+      #%w(conf)
     when "archieves"
-      %w(zip 7zip tar tar.gz tar.gz.md5 gzip)
+      %w(zip 7z tar tar.gz tar.gz.md5 gzip rar)
     else
       puts @opt_parser
       error("Incorrect type ( #{type} ) there is no extensions for this. Try again")
