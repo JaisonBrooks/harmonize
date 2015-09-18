@@ -14,5 +14,8 @@ Run the following to show the help page, this will show you how you can use the 
 
 ```harmonize -h ```
 
+You should expect to see the following help (subject to change):
+![Alt text](/res/harmonize_help.png?raw=true "Help page")
+
 ### Author
 Jaison Brooks
