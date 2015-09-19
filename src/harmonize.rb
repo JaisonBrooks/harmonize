@@ -319,7 +319,7 @@ end
 #######################
 
 #### [ START THE PROGRAM ] ####
-@harmonize = @Harmonize.new(@options)
+@harmonize = Harmonize.new(@options)
 @harmonize.files(ARGV[0])
 @harmonize.move
 ###############################
