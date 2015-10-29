@@ -17,11 +17,11 @@
 # |-----------------------------------------| #
 
 class Harmonize
-  
+
   attr_accessor :input, :output, :verbose, :recursive, :force, :files
-  
+
   VERSION= "0.2"
-  
+
   def initialize(p={})
     @input = valid_dir(p[:input]) || Dir.pwd
     @output = valid_dir(p[:output]) || Dir.home
@@ -30,20 +30,22 @@ class Harmonize
     @force = p[:force] || false
     @files = Array.new
   end
-  
+
   # _key = String
   def valid_key?(_key)
     %w(pictures pics images photos movies videos shows documents docs music tunes data programs exec executables binaries code scripts web archives zips tars).include?(_key)
   end
-  
+
+  # Primary tag names
   def primary_keys
     %w(pictures movies documents music data programs code archives)
   end
-  
+
+  # Match agains the primary keys array
   def primary_key?(_key)
     primary_keys.include?(_key)
   end
-  
+
   # Get a Type and Extensions hash object
   def get_tae_obj(_key)
     obj = {:key => _key, :file_extensions => Array.new, :name => "", :files => Array.new}
@@ -77,17 +79,17 @@ class Harmonize
     end
     obj
   end
-  
+
   def valid_dir(path)
     return if path.nil?
     _path = slash!(path)
     if _path.include?('~')
-      File.expand_path(_path)
+      return File.expand_path(_path)
     elsif Dir.exist?(_path)
-      _path
+      return _path
     end
   end
-  
+
   def output_dir(name)
     dir = Pathname.new("#{@output}/#{name}")
     unless dir.exist?
@@ -95,7 +97,7 @@ class Harmonize
     end
     slash!(dir.to_s)
   end
-  
+
   # Ensure their is always a / at the end of the path
   def slash!(path)
     unless path.end_with?('/')
@@ -103,49 +105,67 @@ class Harmonize
     end
     path
   end
-  
+
   def files(argv)
     objs = setup(argv.to_s.downcase)
     return nil if objs.nil?
-    
+
     objs.each { |obj|
       # TODO - Everything mode, moves all files { @recursive ? Dir["#{output_dir(key)}**/*.*"] }
       # output_dir(obj[:name]) - USED FOR OUTPUT
       obj[:file_extensions].each { |ext|
         if @recursive
-          files = Dir["#{@input}/**/*.#{ext}"]
-          next if files == 0
-          obj[:files] = files
+          # next if files == 0
+          obj[:files] << Dir["#{@input}/**/*.#{ext}"]
         else
-          files = Dir["#{@input}/*.#{ext}"]
-          next if files == 0
-          obj[:files] = files
+          #puts "#{@input}/*.#{ext}"
+          merged = obj[:files] | Dir["#{@input}/*.#{ext}"]
+          obj[:files] = merged
+          #puts obj[:files]
+          #obj[:files] << Dir["#{@input}/*.#{ext}"]
         end
       }
     }
     @files = objs
   end
-  
+
   def move
-    @files.each {|hsh| 
+    @files.each {|hsh|
       if hsh[:files].count == 0
         pu "No (#{hsh[:name]}) files to move"
       else
         out = output_dir(hsh[:name])
         if @verbose
-          pu "Moving #{hsh[:files].count} (#{hsh[:name]}) files to #{out}" 
+          pu "Moving #{hsh[:files].count} (#{hsh[:name]}) files to #{out}"
         end
         FileUtils.mv(hsh[:files], out, {:verbose => @verbose, :force => @force})
       end
     }
     pu "Moving has finished"
   end
-  
-  
+
+  def show_output?
+    pu "Do you want to output folder?"
+    print "==> "
+    a = gets
+    # TODO - finish this!
+    loop do
+      if %w(y Y yes).include?(a.to_s)
+        cmd = "`open` #{@input}"
+        exec cmd
+        break
+      elsif %w(n N no).include?(a.to_s)
+        pu "Ok, were done here then :)"
+        break
+      end
+    end
+  end
+
+
   def setup(argv)
     obj = Array.new
     if (argv === "false") || (argv === "all") || (argv.empty?)
-      primary_keys.each { |key| 
+      primary_keys.each { |key|
         obj << get_tae_obj(key)
       }
     elsif primary_keys.any? { |arg| arg.include?(argv) }
@@ -173,11 +193,11 @@ class Harmonize
     #
     obj
   end
-  
+
   def to_json
     {:input => @input, :output => @output, :verbose => @verbose, :recursive => @recursive, :force => @force, :files => @files}
   end
-  
+
   # With app name puts
   def pu(txt=nil)
     puts "[#{Harmonize}] #{txt || ''}"
@@ -206,6 +226,7 @@ end
 
 
 #### [ Options Parser ] ####
+@options = {}
 @opt_parser = OptionParser.new do |opt|
   opt.banner = <<-BANNER
 .
@@ -263,7 +284,7 @@ end
   opt.separator "|  #{colorize('This would use the current directory as the INPUT and EXPORT','light red')}        |"
   opt.separator "|  #{colorize('it also is assuming you want ALL files harmonized and sorted.','light red')}       |"
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize(' ~ : $','white')} #{colorize('harmonize pics -i Downloads/ -e /Users/bob','light purple')}                   |"
+  opt.separator "|  #{colorize(' ~ : $','white')} #{colorize('harmonize pictures -i Downloads/ -e /Users/bob','light purple')}               |"
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize('This would move all PICS files from ( Downloads/ ) to ','light red')}              |"
   opt.separator "|  #{colorize('( /Users/bob/Pictures ). Since SORT is on by default, ','light red')}              |"
@@ -295,36 +316,37 @@ end
   opt.separator "|                                                                      |"
   opt.separator "|----------------------------------------------------------------------|"
   opt.separator ""
+
   opt.on("-i", "--input FOLDER_PATH", "#{colorize('Input ', 'cyan')}- Where to get the files from") do |input|
     @options[:input] = input
   end
+
   opt.on("-o", "--output FOLDER_PATH", "#{colorize('Output ', 'cyan')}- Where to relocate the files") do |output|
     @options[:output] = output
   end
+
   opt.on("-f", "--force", "#{colorize('Force mode ', 'cyan')}- Overwrite any duplicate files (by name) { BE CAREFUL }!") do
     @options[:force] = true
   end
+
   opt.on("-r", "--resursive", "#{colorize('Resursive mode ', 'cyan')}- Include all sub directory files { BE CAREFUL }!") do
     @options[:recursive] = true
   end
+
   opt.on("-h","--help","#{colorize('Help ','cyan')}- Show this help page") do
       puts @opt_parser
       exit(0)
   end
+
   opt.on("-v","--verbose","#{colorize('Verbose ', 'cyan')}- Include extra console output") do
-      @options[:verbose] = true
-  end  
+    @options[:verbose] = true
+  end
 end
 @opt_parser.parse!
 #######################
 
 #### [ START THE PROGRAM ] ####
-@harmonize = Harmonize.new(@options)
-@harmonize.files(ARGV[0])
-@harmonize.move
+# @harmonize = Harmonize.new(@options)
+# @harmonize.files(ARGV[0])
+# @harmonize.move
 ###############################
-
-
-
-
-  
