@@ -20,11 +20,11 @@ class Harmonize
 
   attr_accessor :input, :output, :verbose, :recursive, :force, :files
 
-  VERSION= "0.2"
+  VERSION= "0.3"
 
   def initialize(p={})
     @input = valid_dir(p[:input]) || Dir.pwd
-    @output = valid_dir(p[:output]) || Dir.home
+    @output = valid_dir(p[:output], true) || Dir.home
     @verbose = p[:verbose] || false
     @recursive = p[:recursive] || false
     @force = p[:force] || false
@@ -69,7 +69,7 @@ class Harmonize
       obj[:file_extensions] = %w(apk app deb jar exe iso pkg dmg)
     elsif %w(code scripts web).include?(_key)
       obj[:name] = "Code"
-      obj[:file_extensions] = %w(css html js php xhtml java py pl cs c lua h cpp class swift scss less rb sh bat)
+      obj[:file_extensions] = %w(css html coffee js php xhtml java py pl cs c lua h cpp class swift scss less rb sh bat)
     elsif %w(archives zips tars).include?(_key)
       obj[:name] = "Archives"
       obj[:file_extensions] = %w(7z gz rar bz2 bz tar zip zipx )
@@ -80,32 +80,33 @@ class Harmonize
     obj
   end
 
-  def valid_dir(path)
-    return if path.nil?
-    _path = slash!(path)
-    if _path.include?('~')
-      return File.expand_path(_path)
-    elsif Dir.exist?(_path)
-      return _path
+  # Validate the directory and create it if specified
+  def valid_dir(path, k=false)
+    return nil if path.nil?
+    path.include?('~') ? path = File.expand_path(path) : path
+    return slash!(File.expand_path(path)) if Dir.exist?(path)
+    if k
+      return slash!(File.expand_path(FileUtils.mkdir_p(path, :mode => 0700).first))
     end
+    #
+    nil
   end
 
+  # Validate the output directory exists, if not create it, similar to above will convert to one method soon
   def output_dir(name)
-    dir = Pathname.new("#{@output}/#{name}")
-    unless dir.exist?
-      dir.mkpath
+    dir = "#{@output}#{name}"
+    unless Dir.exist?(dir)
+      FileUtils.mkdir_p(dir, :mode => 0700)
     end
-    slash!(dir.to_s)
+    slash!(dir)
   end
 
   # Ensure their is always a / at the end of the path
   def slash!(path)
-    unless path.end_with?('/')
-      return path + "/"
-    end
-    path
+    path.end_with?('/') ? path : "#{path}/"
   end
-
+  
+  # Gather the files based on tag
   def files(argv)
     objs = setup(argv.to_s.downcase)
     return nil if objs.nil?
@@ -116,13 +117,22 @@ class Harmonize
       obj[:file_extensions].each { |ext|
         if @recursive
           # next if files == 0
-          obj[:files] << Dir["#{@input}/**/*.#{ext}"]
+          obj[:files] << Dir["#{@input}**/*.#{ext}"]
         else
-          #puts "#{@input}/*.#{ext}"
-          merged = obj[:files] | Dir["#{@input}/*.#{ext}"]
-          obj[:files] = merged
-          #puts obj[:files]
-          #obj[:files] << Dir["#{@input}/*.#{ext}"]
+          #merged = obj[:files] | Dir["#{@input}*.#{ext}"]
+          #obj[:files] = merged
+          arr = Dir["#{@input}/*.#{ext}"]
+          unless arr.empty?
+              arr.each {|file| 
+                obj[:files] << file
+                # if @verbose
+#                   pu "#{file}\n"
+#                 end
+              }
+          end
+          # Above method add's each file to the parent array.
+          # Someday, i may wanna do a 2d array by file type for organization
+          # by file extension.
         end
       }
     }
@@ -136,26 +146,28 @@ class Harmonize
       else
         out = output_dir(hsh[:name])
         if @verbose
-          pu "Moving #{hsh[:files].count} (#{hsh[:name]}) files to #{out}"
+          pu "Moving #{colorize(hsh[:files].count,'light purple')} (#{colorize(hsh[:name],'light green')}) files to #{colorize(out,'light blue')}"
         end
         FileUtils.mv(hsh[:files], out, {:verbose => @verbose, :force => @force})
       end
     }
-    pu "Moving has finished"
+    pu colorize('Harmonizing has finished', 'light blue')
   end
 
-  def show_output?
-    pu "Do you want to output folder?"
-    print "==> "
+  def finish
+    pu "#{colorize('Finished, No Files Moved :)','light green')}" if @files.count == 0
+    pu "Do you want to open your output folder? #{colorize('y Y yes','green')} / #{colorize('n N no','red')}"
+    print "[Harmonize] => "
     a = gets
     # TODO - finish this!
     loop do
-      if %w(y Y yes).include?(a.to_s)
+      r = a.strip.to_s
+      if %w(y Y yes).include?(r)
         cmd = "`open` #{@input}"
         exec cmd
         break
-      elsif %w(n N no).include?(a.to_s)
-        pu "Ok, were done here then :)"
+      elsif %w(n N no).include?(r)
+        pu "#{colorize('Ok, were done here then :)','light green')}"
         break
       end
     end
@@ -223,7 +235,8 @@ def colorize(text, color = "default", bgColor = "default")
     return "\033[#{bgColor_code};#{color_code}m#{text}\033[0m"
 end
 
-
+#### [ Clear ] ####
+`clear`
 
 #### [ Options Parser ] ####
 @options = {}
@@ -272,7 +285,7 @@ end
   opt.separator "|  #{colorize(' DEFAULTS ','white','black')}                                                          |"
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize(' INPUT (-i)   :','white')} #{colorize('[ Current Directory ]','cyan')}                               |"
-  opt.separator "|  #{colorize(' EXPORT (-e)  :','white')} #{colorize('[ Home Directory ]','cyan')}                                  |"
+  opt.separator "|  #{colorize(' OUTPUT (-o)  :','white')} #{colorize('[ Home Directory ]','cyan')}                                  |"
   opt.separator "|  #{colorize(' VERBOSE (-v) :','white')} #{colorize('[ OFF ]','cyan')}                                             |"
   opt.separator "|                                                                      |"
   opt.separator "| #{colorize('.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . ')} |"
@@ -284,14 +297,14 @@ end
   opt.separator "|  #{colorize('This would use the current directory as the INPUT and EXPORT','light red')}        |"
   opt.separator "|  #{colorize('it also is assuming you want ALL files harmonized and sorted.','light red')}       |"
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize(' ~ : $','white')} #{colorize('harmonize pictures -i Downloads/ -e /Users/bob','light purple')}               |"
+  opt.separator "|  #{colorize(' ~ : $','white')} #{colorize('harmonize pictures -i Downloads/ -o /Users/bob','light purple')}               |"
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize('This would move all PICS files from ( Downloads/ ) to ','light red')}              |"
   opt.separator "|  #{colorize('( /Users/bob/Pictures ). Since SORT is on by default, ','light red')}              |"
   opt.separator "|  #{colorize('a directory matching the tag name (pictures) will be created and ','light red')}   |"
   opt.separator "|  #{colorize('all cooresponding files will be relocated here.','light red')}                     |"
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize(' ~ : $','white')} #{colorize('harmonize docs -i Downloads/ -e /Users/bob -r -v','light purple')}             |"
+  opt.separator "|  #{colorize(' ~ : $','white')} #{colorize('harmonize docs -i Downloads/ -o /Users/bob -r -v','light purple')}             |"
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize('Like the above example, all files from ( Downloads/ ), including ','light red')}   |"
   opt.separator "|  #{colorize('all sub directories ( Downloads/blah, Downloads/random/blah, etc )','light red')}  |"
@@ -307,10 +320,10 @@ end
   opt.separator "|  #{colorize('More examples coming soon...','light purple')}                                        |"
   opt.separator "|                                                                      |"
   opt.separator "| #{colorize('.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . ')} |"
-  opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize(' ARGUMENTS ','white','black')} = #{colorize('See paramaters below','light blue')}                                  |"
-  opt.separator "|                                                                      |"
-  opt.separator "| #{colorize('.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . ')} |"
+  # opt.separator "|                                                                      |"
+  # opt.separator "|  #{colorize(' ARGUMENTS ','white','black')} = #{colorize('See paramaters below','light blue')}                                  |"
+  # opt.separator "|                                                                      |"
+  # opt.separator "| #{colorize('.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . ')} |"
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize(' SCRIPT VERSION ','white','black')} = #{colorize(Harmonize::VERSION, 'light purple')}                                              |"
   opt.separator "|                                                                      |"
@@ -335,7 +348,7 @@ end
 
   opt.on("-h","--help","#{colorize('Help ','cyan')}- Show this help page") do
       puts @opt_parser
-      exit(0)
+      exit(0)f
   end
 
   opt.on("-v","--verbose","#{colorize('Verbose ', 'cyan')}- Include extra console output") do
@@ -346,7 +359,12 @@ end
 #######################
 
 #### [ START THE PROGRAM ] ####
-# @harmonize = Harmonize.new(@options)
-# @harmonize.files(ARGV[0])
-# @harmonize.move
+@harmonize = Harmonize.new(@options)
+@harmonize.files(ARGV[0])
+@harmonize.move
+@harmonize.finish
 ###############################
+
+#### TODO ####
+#TODO - Fix bug regarding Array to String conversion
+#TODO - Write some freakin tests

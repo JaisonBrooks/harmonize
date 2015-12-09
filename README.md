@@ -3,7 +3,7 @@ Let me ask you, how does your Downloads folder look? Unorganized? Cluttered? or 
 
 Ladies and Gents, i present you with **Harmonize**
 
-***Harmonize***, is a script that helps organize your photos, videos, music, documents and more. It flexible INPUT / EXPORT arguments are easy to use and give you the ability to let Harmonize either do the moving and organizing for you or organize where and how you want it to.
+***Harmonize***, is a script that helps organize your photos, videos, music, documents and more. It's flexible INPUT / EXPORT arguments are easy to use and give you the ability to let Harmonize either do the moving and organizing for you or organize where and how you want it to.
 
 !WARNING!
 This script is very alpha and could result in overwritten files, script execution errors, bugs, random explosions and more. You have been warned!
@@ -43,7 +43,7 @@ Supported Params (subject to change):
 ![Alt text](/res/screenshot_params_harmonize.png?raw=true "Support Params")
 
 ### Version
-0.2
+0.3
 
 ### Author
 Jaison Brooks
