@@ -348,7 +348,7 @@ end
 
   opt.on("-h","--help","#{colorize('Help ','cyan')}- Show this help page") do
       puts @opt_parser
-      exit(0)f
+      exit(0)
   end
 
   opt.on("-v","--verbose","#{colorize('Verbose ', 'cyan')}- Include extra console output") do
