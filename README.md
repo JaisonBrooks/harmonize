@@ -25,7 +25,7 @@ sh ./init_harmonize.sh
 
 * Wait a moment for the script to complete
 
-The init_harmonize.sh creates a executable binary file and stores it here => /usr/loca/bin/harmonize.
+The ```init_harmonize.sh``` creates a executable binary file and stores it here => /usr/loca/bin/harmonize.
 
 ***NOTE*** Please ensure that /usr/local/bin is stored in your PATH!
 
