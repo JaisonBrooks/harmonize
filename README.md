@@ -3,10 +3,10 @@ Let me ask you, how does your Downloads folder look? Unorganized? Cluttered? or 
 
 Ladies and Gents, i present you with **Harmonize**
 
-***Harmonize***, is a script that helps organize your photos, videos, music, documents and more. It's flexible INPUT / EXPORT arguments are easy to use and give you the ability to let Harmonize either do the moving and organizing for you or organize where and how you want it to.
+***Harmonize***, is a script that helps organize your photos, videos, music, documents and more. It's flexible INPUT / OUPUT arguments allow you to organize files to and from quickly. With simple file type keyboards, you can easily move specific type of files. Or even just allow Harmonize to do ALL the moving and organizing for you.
 
 !WARNING!
-This script is very alpha and could result in overwritten files, script execution errors, bugs, random explosions and more. You have been warned!
+This script is alpha and could result in overwritten files, file corruption, script execution errors, bugs, random explosions and more. You have been warned! and by using this tool, you agree that I AM NOT responsible for lost or damange to your files.
 
 ### Setup
 * Clone the Repo
@@ -18,7 +18,7 @@ git clone https://github.com/JaisonBrooks/harmonize.git
 * Run the following commands (from the root of the project):
  
 ```
-cd src/
+cd harmonize.git/src/
 chmod u+x init_harmonize.sh
 sh ./init_harmonize.sh
 ```
@@ -26,6 +26,8 @@ sh ./init_harmonize.sh
 * Wait a moment for the script to complete
 
 The init_harmonize.sh creates a executable binary file and stores it here => /usr/loca/bin/harmonize.
+
+***NOTE*** Please ensure that /usr/local/bin is stored in your PATH!
 
 ### Usage
 Run the following command to view the help page which contains the supported file types, arguments and examples on how to use the tool.
