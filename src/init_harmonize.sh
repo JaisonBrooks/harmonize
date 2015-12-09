@@ -3,7 +3,7 @@
 # Init script for Harmonize.rb
 # Author: Jaison Brooks
 # Dec 2015
-L=" [Harmonize]:"
+L=" [Harmonize]"
 echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 echo  "$L Updating [ harmonize.rb ] Permissions" | sed $'s/harmonize.rb/\e[36m&\e[0m/' 
 chmod 755 harmonize.rb

@@ -23,8 +23,8 @@ class Harmonize
   VERSION= "0.3"
 
   def initialize(p={})
-    @input = valid_dir(p[:input]) || Dir.pwd
-    @output = valid_dir(p[:output], true) || Dir.home
+    @input = valid_dir(p[:input]) || slash!(Dir.pwd)
+    @output = valid_dir(p[:output], true) || slash!(Dir.home)
     @verbose = p[:verbose] || false
     @recursive = p[:recursive] || false
     @force = p[:force] || false
@@ -75,7 +75,7 @@ class Harmonize
       obj[:file_extensions] = %w(7z gz rar bz2 bz tar zip zipx )
     else
       puts @opt_parser
-      error("Incorrect type ( #{_key} ) there is no file extensions for this type. Please try again") and return nil
+      error("Incorrect type (#{colorize(_key,'red')}) there is no file extensions for this type. Please try again") and return nil
     end
     obj
   end
@@ -117,7 +117,12 @@ class Harmonize
       obj[:file_extensions].each { |ext|
         if @recursive
           # next if files == 0
-          obj[:files] << Dir["#{@input}**/*.#{ext}"]
+          #pu "#{colorize('Recursive moving - COMING SOON', 'light green')}"
+          arr = Dir["#{@input}**/*.#{ext}"]
+          arr.each {|file| 
+            obj[:files] << file
+          }
+          #obj[:files] << Dir["#{@input}**/*.#{ext}"]
         else
           #merged = obj[:files] | Dir["#{@input}*.#{ext}"]
           #obj[:files] = merged
@@ -142,13 +147,26 @@ class Harmonize
   def move
     @files.each {|hsh|
       if hsh[:files].count == 0
-        pu "No (#{hsh[:name]}) files to move"
+        pu "#No (#{colorize(hsh[:name],'light green')}) files to move"
       else
         out = output_dir(hsh[:name])
-        if @verbose
-          pu "Moving #{colorize(hsh[:files].count,'light purple')} (#{colorize(hsh[:name],'light green')}) files to #{colorize(out,'light blue')}"
-        end
-        FileUtils.mv(hsh[:files], out, {:verbose => @verbose, :force => @force})
+        fc = 0
+        # TODO [BUG] - Using this method overrides existing files with the same name, regardless of force flag
+        hsh[:files].each {|file|
+          puts file
+          if @force
+            FileUtils.mv(file, out, {:verbose => @verbose, :force => @force})
+            fc+=1
+          else
+            if File.exists?("#{out}/#{File.basename(file)}")
+              pu "Duplicate filename (#{colorize(file,'light red')}), leaving file alone"
+            else
+              fc+=1
+              FileUtils.mv(file, out, {:verbose => @verbose})
+            end
+          end
+        }
+        pu "Moved #{colorize(fc,'light purple')}/#{colorize(hsh[:files].count,'light purple')} (#{colorize(hsh[:name],'light green')}) files to #{colorize(out,'light blue')}"
       end
     }
     pu colorize('Harmonizing has finished', 'light blue')
@@ -198,7 +216,7 @@ class Harmonize
       unless a.nil?
         obj << a
       else
-        error("Invalid argument ( #{argv} ), Please try again :/") and return nil
+        error("Invalid argument (#{colorize(argv,'red')}), Please try again :/") and return nil
       end
       #error("Invalid argument ( #{argv} ), Please try again :/") and return
     end
@@ -344,6 +362,7 @@ end
 
   opt.on("-r", "--resursive", "#{colorize('Resursive mode ', 'cyan')}- Include all sub directory files { BE CAREFUL }!") do
     @options[:recursive] = true
+    
   end
 
   opt.on("-h","--help","#{colorize('Help ','cyan')}- Show this help page") do
@@ -362,7 +381,7 @@ end
 @harmonize = Harmonize.new(@options)
 @harmonize.files(ARGV[0])
 @harmonize.move
-@harmonize.finish
+#@harmonize.finish
 ###############################
 
 #### TODO ####
