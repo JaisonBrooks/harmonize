@@ -294,7 +294,7 @@ end
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize(' ~ : $','white')} #{colorize('harmonize','light purple')}                                                    |"
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize('This would use the current directory as the INPUT and EXPORT','light red')}        |"
+  opt.separator "|  #{colorize('This would use the current directory as the INPUT and OUTPUT','light red')}        |"
   opt.separator "|  #{colorize('it also is assuming you want ALL files harmonized and sorted.','light red')}       |"
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize(' ~ : $','white')} #{colorize('harmonize pictures -i Downloads/ -o /Users/bob','light purple')}               |"
