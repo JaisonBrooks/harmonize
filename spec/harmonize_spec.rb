@@ -5,9 +5,9 @@
 require 'spec_helper'
 require File.expand_path('../src/harmonize.rb', File.dirname(__FILE__))
 
-Rspec.describe Harmonize, "when" do
+RSpec.describe Harmonize, "when" do
   
-  context "initiated without options" do
+  context "initiated w/out params" do
     
     before(:each) do
       @harmonize = Harmonize.new
@@ -17,7 +17,7 @@ Rspec.describe Harmonize, "when" do
       expect(@harmonize.nil?).to eq false
     end
     
-    context 'attributes' do
+    context 'should have attributes' do
       
       it '#INPUT' do
         expect(@harmonize.input.nil?).to_not eq true
@@ -43,22 +43,17 @@ Rspec.describe Harmonize, "when" do
         expect(@harmonize.launch.nil?).to_not eq true
         expect(@harmonize.launch).to eq false
       end
-      it '#FILES' do
-        expect(@harmonize.files.nil?).to_not eq true
-        expect(@harmonize.files).to eq Array.new
-        expect(@harmonize.files.count).to eq 0
-      end
       
     end
         
   end
   
-  context 'initiated with options' do
+  context 'initiated w/ params' do
     
     before(:each) do
       @harmonize = Harmonize.new({
-        :input => File.expand_path('test_files'), 
-        :output => File.expand_path('test_output'), 
+        :input => File.expand_path('spec/test_files/'), 
+        :output => File.expand_path('spec/test_output/'), 
         :verbose => true, 
         :recursive => true, 
         :force => true, 
@@ -70,14 +65,14 @@ Rspec.describe Harmonize, "when" do
       expect(@harmonize.nil?).to_not eq true
     end
     
-    context 'attributes' do
+    context 'should have attributes' do
       it '#INPUT' do
         expect(@harmonize.input.nil?).to_not eq true
-        expect(@harmonize.input).to eq File.expand_path('test_files')
+        expect(@harmonize.input).to eq "#{File.expand_path('spec/test_files')}/"
       end
       it '#OUTPUT' do
         expect(@harmonize.output.nil?).to_not eq true
-        expect(@harmonize.output).to eq File.expand_path('test_output')
+        expect(@harmonize.output).to eq "#{File.expand_path('spec/test_output')}/"
       end
       it '#VERBOSE' do
         expect(@harmonize.verbose.nil?).to_not eq true
@@ -95,14 +90,7 @@ Rspec.describe Harmonize, "when" do
         expect(@harmonize.launch.nil?).to_not eq true
         expect(@harmonize.launch).to eq true
       end
-      it '#FILES' do
-        expect(@harmonize.files.nil?).to_not eq true
-        expect(@harmonize.files).to eq Array.new
-        expect(@harmonize.files.count).to eq 0
-      end
     end
-    
-    it 'methods'
     
   end
   
