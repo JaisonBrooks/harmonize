@@ -269,7 +269,7 @@ end
   opt.banner = <<-BANNER
 .
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-|#{colorize('                ','black','black')}#{colorize('++++','white','black')}#{colorize('>>','cyan','black')}#{colorize('    ','black','black')}#{colorize('H A R M O N I Z E','light purple', 'black')}#{colorize('    ','black','black')}#{colorize('<<','cyan','black')}#{colorize('++++','white','black')}#{colorize('                 ','black','black')}|
+|#{colorize('                ','black','black')}#{colorize('++++','yellow','black')}#{colorize('>>','cyan','black')}#{colorize('    ','black','black')}#{colorize('H A R M O N I Z E','light purple', 'black')}#{colorize('    ','black','black')}#{colorize('<<','cyan','black')}#{colorize('++++','yellow','black')}#{colorize('                 ','black','black')}|
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   BANNER
   opt.separator "|                                                                      |"
@@ -360,6 +360,14 @@ end
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize(' AUTHOR ','white','black')} = #{colorize('Jaison Brooks', 'light purple')}                                            |"
   opt.separator "|  #{colorize(' VERSION ','white','black')} = #{colorize(Harmonize::VERSION, 'light purple')}                                                     |"
+  opt.separator "|                                                                      |"
+  opt.separator "| #{colorize('.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . ')} |"
+  opt.separator "|                                                                      |"
+  opt.separator "|  #{colorize(' DISCLAIMER ','white','black')}                                                        |"
+  opt.separator "|                                                                      |"
+  opt.separator "|  #{colorize(' By using this script, you agree that i am not responsible for any','cyan')}  |"
+  opt.separator "|  #{colorize(' damage, corruption and/or misplacement of your files.','cyan')}              |"
+  opt.separator "|  #{colorize(' You have been Warned.','cyan')}#{colorize(' Use at your own risk!', 'red')}                        |"
   opt.separator "|                                                                      |"
   opt.separator "|----------------------------------------------------------------------|"
   opt.separator ""
