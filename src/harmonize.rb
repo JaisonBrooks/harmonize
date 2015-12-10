@@ -18,7 +18,7 @@
 
 class Harmonize
 
-  attr_accessor :input, :output, :verbose, :recursive, :force, :files
+  attr_accessor :input, :output, :verbose, :recursive, :force, :launch, :straight, :files
 
   VERSION= "0.3"
 
@@ -28,6 +28,8 @@ class Harmonize
     @verbose = p[:verbose] || false
     @recursive = p[:recursive] || false
     @force = p[:force] || false
+    @launch = p[:launch] || false
+    @straight = p[:straight] || false
     @files = Array.new
   end
 
@@ -149,11 +151,10 @@ class Harmonize
       if hsh[:files].count == 0
         pu "#No (#{colorize(hsh[:name],'light green')}) files to move"
       else
-        out = output_dir(hsh[:name])
+        out = @straight ? slash!(@output) : output_dir(hsh[:name])
         fc = 0
         # TODO [BUG] - Using this method overrides existing files with the same name, regardless of force flag
         hsh[:files].each {|file|
-          puts file
           if @force
             FileUtils.mv(file, out, {:verbose => @verbose, :force => @force})
             fc+=1
@@ -166,10 +167,10 @@ class Harmonize
             end
           end
         }
-        pu "Moved #{colorize(fc,'light purple')}/#{colorize(hsh[:files].count,'light purple')} (#{colorize(hsh[:name],'light green')}) files to #{colorize(out,'light blue')}"
+        pu "Moved #{colorize(fc,'light purple')} / #{colorize(hsh[:files].count,'light purple')} (#{colorize(hsh[:name],'light green')}) files to #{colorize(out,'light blue')}"
       end
     }
-    pu colorize('Harmonizing has finished', 'light blue')
+    pu "#{colorize('Harmonizing', 'light blue')} has completed { *-* }"
   end
 
   def finish
@@ -253,8 +254,8 @@ def colorize(text, color = "default", bgColor = "default")
     return "\033[#{bgColor_code};#{color_code}m#{text}\033[0m"
 end
 
-#### [ Clear ] ####
-`clear`
+# #### [ Clear ] ####
+# `clear`
 
 #### [ Options Parser ] ####
 @options = {}
@@ -298,52 +299,58 @@ end
   opt.separator "|   #{colorize(' archives ','light green','black')}                                                         |"
   opt.separator "|     [ zip 7z tar gz gzip rar and more... ]                           |"
   opt.separator "|                                                                      |"
-  opt.separator "| #{colorize('.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . ')} |"
+  opt.separator "|   #{colorize(' all ','light green','black')}                                                              |"
+  opt.separator "|     [ all supported file types and file extensions ]                 |"
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize(' DEFAULTS ','white','black')}                                                          |"
-  opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize(' INPUT (-i)   :','white')} #{colorize('[ Current Directory ]','cyan')}                               |"
-  opt.separator "|  #{colorize(' OUTPUT (-o)  :','white')} #{colorize('[ Home Directory ]','cyan')}                                  |"
-  opt.separator "|  #{colorize(' VERBOSE (-v) :','white')} #{colorize('[ OFF ]','cyan')}                                             |"
-  opt.separator "|                                                                      |"
+  # opt.separator "| #{colorize('.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . ')} |"
+#   opt.separator "|                                                                      |"
+#   opt.separator "|  #{colorize(' DEFAULTS ','white','black')}                                                          |"
+#   opt.separator "|                                                                      |"
+#   opt.separator "|  #{colorize(' INPUT (-i)   :','white')} #{colorize('[ Current Directory ]','cyan')}                               |"
+#   opt.separator "|  #{colorize(' OUTPUT (-o)  :','white')} #{colorize('[ Home Directory ]','cyan')}                                  |"
+#   opt.separator "|  #{colorize(' VERBOSE (-v) :','white')} #{colorize('[ OFF ]','cyan')}                                             |"
+#   opt.separator "|                                                                      |"
   opt.separator "| #{colorize('.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . ')} |"
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize(' EXAMPLES ','white','black')}                                                          |"
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize(' ~ : $','white')} #{colorize('harmonize','light purple')}                                                    |"
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize('This would use the current directory as the INPUT and OUTPUT','light red')}        |"
-  opt.separator "|  #{colorize('it also is assuming you want ALL files harmonized and sorted.','light red')}       |"
+  opt.separator "|  #{colorize('This would use the current path as the INPUT and your Home path','light red')}     |"
+  opt.separator "|  #{colorize('as the OUTPUT and Harmonize all FILE TYPES.','light red')}                         |"
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize(' ~ : $','white')} #{colorize('harmonize pictures -i Downloads/ -o /Users/bob','light purple')}               |"
+  opt.separator "|  #{colorize(' ~ : $','white')} #{colorize('harmonize pictures -i ~/Downloads -o ~/OutputFolder','light purple')}          |"
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize('This would move all PICS files from ( Downloads/ ) to ','light red')}              |"
-  opt.separator "|  #{colorize('( /Users/bob/Pictures ). Since SORT is on by default, ','light red')}              |"
-  opt.separator "|  #{colorize('a directory matching the tag name (pictures) will be created and ','light red')}   |"
-  opt.separator "|  #{colorize('all cooresponding files will be relocated here.','light red')}                     |"
+  opt.separator "|  #{colorize('This would move all PICTURES from ( ~/Downloads ) to ','light red')}               |"
+  opt.separator "|  #{colorize('( ~/OutputFolder/Pictures ), Notice the *Pictures* folder, this is','light red')}  |"
+  opt.separator "|  #{colorize('because for each tag name a directory gets created and all','light red')}          |"
+  opt.separator "|  #{colorize('cooresponding files are relocated to this directory.','light red')}                |"
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize(' ~ : $','white')} #{colorize('harmonize docs -i Downloads/ -o /Users/bob -r -v','light purple')}             |"
+  opt.separator "|  #{colorize('*Use ','light red')}#{colorize('-s','light purple')}#{colorize(' to relocate to the output root, instead of sub directories.','light red')} |"
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize('Like the above example, all files from ( Downloads/ ), including ','light red')}   |"
-  opt.separator "|  #{colorize('all sub directories ( Downloads/blah, Downloads/random/blah, etc )','light red')}  |"
-  opt.separator "|  #{colorize('will be moved to ( /Users/bob/Docs ) and the console will output','light red')}    |"
-  opt.separator "|  #{colorize('extra information about what the script is doing.','light red')}                   |"
+  opt.separator "|  #{colorize(' ~ : $','white')} #{colorize('harmonize docs -i ~/Downloads -o ~/MyDocs -r -s -v','light purple')}           |"
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize('You may run into duplicate, which will be skipped','light red')}                   |"
+  opt.separator "|  #{colorize('In this case, All DOCS from ( ~/Downloads ) including all files','light red')}     |"
+  opt.separator "|  #{colorize('with sub directories ( ~/Downloads/blah, ~/Downloads/random/blah )','light red')}  |"
+  opt.separator "|  #{colorize('will be moved to the root of the ( ~/MyDocs ) folder.','light red')}               |"
+  opt.separator "|  #{colorize('You will also see extra console output since ( -v ) is enabled.','light red')}     |"
+  opt.separator "|                                                                      |"
+  opt.separator "|  #{colorize('You may run into duplicate files with (-r), these will be skipped','light red')}   |"
   opt.separator "|  #{colorize('unless you include a ( -f, --force ) argument, which will override','light red')}  |"
   opt.separator "|  #{colorize('all files where a duplicate file name exists.','light red')}                       |"
   opt.separator "|                                                                      |"
   opt.separator "|  #{colorize('(BE CAREFUL) there are no DO OVERs with (-f, --force)','red')}               |"
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize('More examples coming soon...','light purple')}                                        |"
-  opt.separator "|                                                                      |"
+  # opt.separator "|  #{colorize('More examples coming soon...','light purple')}                                        |"
+  # opt.separator "|                                                                      |"
   opt.separator "| #{colorize('.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . ')} |"
   # opt.separator "|                                                                      |"
   # opt.separator "|  #{colorize(' ARGUMENTS ','white','black')} = #{colorize('See paramaters below','light blue')}                                  |"
   # opt.separator "|                                                                      |"
   # opt.separator "| #{colorize('.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . ')} |"
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize(' SCRIPT VERSION ','white','black')} = #{colorize(Harmonize::VERSION, 'light purple')}                                              |"
+  opt.separator "|  #{colorize(' AUTHOR ','white','black')} = #{colorize('Jaison Brooks', 'light purple')}                                            |"
+  opt.separator "|  #{colorize(' VERSION ','white','black')} = #{colorize(Harmonize::VERSION, 'light purple')}                                                     |"
   opt.separator "|                                                                      |"
   opt.separator "|----------------------------------------------------------------------|"
   opt.separator ""
@@ -356,22 +363,30 @@ end
     @options[:output] = output
   end
 
-  opt.on("-f", "--force", "#{colorize('Force mode ', 'cyan')}- Overwrite any duplicate files (by name) { BE CAREFUL }!") do
+  opt.on("-f", "--force", "#{colorize('Force ', 'cyan')}- Overwrite any duplicates { BE CAREFUL }!") do
     @options[:force] = true
   end
+  
+  opt.on("-s", "--straight", "#{colorize('Straight ', 'cyan')}- Move files to output's root instead of sub folders") do
+    @options[:straight] = true
+  end
+  
+  opt.on("-l", "--launch", "#{colorize('Launch ', 'cyan')}- Open the output folder when completed") do
+    @options[:launch] = true
+  end
 
-  opt.on("-r", "--resursive", "#{colorize('Resursive mode ', 'cyan')}- Include all sub directory files { BE CAREFUL }!") do
+  opt.on("-r", "--resursive", "#{colorize('Resursive ', 'cyan')}- Include all sub directory files { BE CAREFUL }!") do
     @options[:recursive] = true
     
   end
 
+  opt.on("-v","--verbose","#{colorize('Verbose ', 'cyan')}- Include extra console output") do
+    @options[:verbose] = true
+  end
+  
   opt.on("-h","--help","#{colorize('Help ','cyan')}- Show this help page") do
       puts @opt_parser
       exit(0)
-  end
-
-  opt.on("-v","--verbose","#{colorize('Verbose ', 'cyan')}- Include extra console output") do
-    @options[:verbose] = true
   end
 end
 @opt_parser.parse!
@@ -381,9 +396,7 @@ end
 @harmonize = Harmonize.new(@options)
 @harmonize.files(ARGV[0])
 @harmonize.move
-#@harmonize.finish
 ###############################
 
 #### TODO ####
-#TODO - Fix bug regarding Array to String conversion
 #TODO - Write some freakin tests
