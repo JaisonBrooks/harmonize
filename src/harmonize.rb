@@ -108,8 +108,19 @@ class Harmonize
     path.end_with?('/') ? path : "#{path}/"
   end
   
+  # Show Tags with Extensions
+  def tags
+    pu "#{colorize('Types & Extensions', 'light purple')}"
+    primary_keys.each {|key|
+      obj = get_tae_obj(key)
+      pu "#{colorize(obj[:name], 'light green')} : #{colorize(obj[:file_extensions], 'light blue')} "
+    }
+    exit
+  end
+  
   # Gather the files based on tag
   def files(argv)
+    tags and return if argv.to_s.upcase == 'TAGS'
     objs = setup(argv.to_s.downcase)
     return nil if objs.nil?
     objs.each { |obj|
@@ -166,12 +177,12 @@ class Harmonize
     pu "Your files have been #{colorize(' H A R M O N I Z E D ', 'light purple', 'black')}"
   end
 
-  # MAY USE LATER
+  # Perform any finishing tasks
   def finish
-    #pu "#{colorize('Finished, No Files Moved :)','light green')}" if @files.count == 0
     if @launch
       exec( "open #{@output}" )
     end
+      # MAY USE LATER
     # pu "Do you want to open your output folder? #{colorize('y Y yes','green')} / #{colorize('n N no','red')}"
 #     print "[Harmonize] => "
 #     a = gets
@@ -262,7 +273,7 @@ end
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   BANNER
   opt.separator "|                                                                      |"
-  opt.separator "|  #{colorize(' USAGE ','white','black')} : #{colorize('$','white')} #{colorize('harmonize', 'light purple')} #{colorize('TYPES', 'light green')} #{colorize('ARGUMENTS', 'light blue')}                               |"
+  opt.separator "|  #{colorize(' USAGE ','white','black')} : #{colorize('$','white')} #{colorize('harmonize', 'light purple')} #{colorize('TYPE', 'light green')} #{colorize('ARGUMENTS', 'light blue')}                                |"
   opt.separator "|                                                                      |"
   opt.separator "| #{colorize('.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . ')} |"
   opt.separator "|                                                                      |"
@@ -296,6 +307,9 @@ end
   opt.separator "|                                                                      |"
   opt.separator "|   #{colorize(' all ','light green','black')}                                                              |"
   opt.separator "|     [ all supported file types and file extensions ]                 |"
+  opt.separator "|                                                                      |"
+  opt.separator "|   #{colorize(' tags ','light green','black')}                                                             |"
+  opt.separator "|     [ Run 'harmonize tags' to view each type & its file extensions ] |"
   opt.separator "|                                                                      |"
   # opt.separator "| #{colorize('.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . ')} |"
 #   opt.separator "|                                                                      |"
