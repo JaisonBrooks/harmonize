@@ -112,14 +112,10 @@ class Harmonize
   def files(argv)
     objs = setup(argv.to_s.downcase)
     return nil if objs.nil?
-
     objs.each { |obj|
       # TODO - Everything mode, moves all files { @recursive ? Dir["#{output_dir(key)}**/*.*"] }
-      # output_dir(obj[:name]) - USED FOR OUTPUT
       obj[:file_extensions].each { |ext|
         if @recursive
-          # next if files == 0
-          #pu "#{colorize('Recursive moving - COMING SOON', 'light green')}"
           arr = Dir["#{@input}**/*.#{ext}"]
           arr.each {|file| 
             obj[:files] << file
@@ -132,9 +128,6 @@ class Harmonize
           unless arr.empty?
               arr.each {|file| 
                 obj[:files] << file
-                # if @verbose
-#                   pu "#{file}\n"
-#                 end
               }
           end
           # Above method add's each file to the parent array.
@@ -146,6 +139,7 @@ class Harmonize
     @files = objs
   end
 
+  # Perform core operation, move files
   def move
     @files.each {|hsh|
       if hsh[:files].count == 0
@@ -153,7 +147,6 @@ class Harmonize
       else
         out = @straight ? slash!(@output) : output_dir(hsh[:name])
         fc = 0
-        # TODO [BUG] - Using this method overrides existing files with the same name, regardless of force flag
         hsh[:files].each {|file|
           if @force
             FileUtils.mv(file, out, {:verbose => @verbose, :force => @force})
@@ -170,29 +163,32 @@ class Harmonize
         pu "Moved #{colorize(fc,'light purple')} / #{colorize(hsh[:files].count,'light purple')} (#{colorize(hsh[:name],'light green')}) files to #{colorize(out,'light blue')}"
       end
     }
-    pu "#{colorize('Harmonizing', 'light blue')} has completed { *-* }"
+    pu "Your files have been #{colorize(' H A R M O N I Z E D ', 'light purple', 'black')}"
   end
 
+  # MAY USE LATER
   def finish
-    pu "#{colorize('Finished, No Files Moved :)','light green')}" if @files.count == 0
-    pu "Do you want to open your output folder? #{colorize('y Y yes','green')} / #{colorize('n N no','red')}"
-    print "[Harmonize] => "
-    a = gets
-    # TODO - finish this!
-    loop do
-      r = a.strip.to_s
-      if %w(y Y yes).include?(r)
-        cmd = "`open` #{@input}"
-        exec cmd
-        break
-      elsif %w(n N no).include?(r)
-        pu "#{colorize('Ok, were done here then :)','light green')}"
-        break
-      end
+    #pu "#{colorize('Finished, No Files Moved :)','light green')}" if @files.count == 0
+    if @launch
+      exec( "open #{@output}" )
     end
+    # pu "Do you want to open your output folder? #{colorize('y Y yes','green')} / #{colorize('n N no','red')}"
+#     print "[Harmonize] => "
+#     a = gets
+#     loop do
+#       r = a.strip.to_s
+#       if %w(y Y yes).include?(r)
+#         cmd = "`open` #{@input}"
+#         exec cmd
+#         break
+#       elsif %w(n N no).include?(r)
+#         pu "#{colorize('Ok, were done here then :)','light green')}"
+#         break
+#       end
+#     end
   end
 
-
+  #
   def setup(argv)
     obj = Array.new
     if (argv === "false") || (argv === "all") || (argv.empty?)
@@ -219,7 +215,6 @@ class Harmonize
       else
         error("Invalid argument (#{colorize(argv,'red')}), Please try again :/") and return nil
       end
-      #error("Invalid argument ( #{argv} ), Please try again :/") and return
     end
     #
     obj
@@ -396,7 +391,5 @@ end
 @harmonize = Harmonize.new(@options)
 @harmonize.files(ARGV[0])
 @harmonize.move
+@harmonize.finish
 ###############################
-
-#### TODO ####
-#TODO - Write some freakin tests
