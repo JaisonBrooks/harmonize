@@ -143,7 +143,7 @@ class Harmonize
   def move
     @files.each {|hsh|
       if hsh[:files].count == 0
-        pu "#No (#{colorize(hsh[:name],'light green')}) files to move"
+        pu "No (#{colorize(hsh[:name],'light green')}) files to move"
       else
         out = @straight ? slash!(@output) : output_dir(hsh[:name])
         fc = 0
