@@ -17,10 +17,22 @@
 # |-----------------------------------------| #
 
 class Harmonize
+  
+  # Attribute Definitions #
+  # input - where to locate files
+  # output - where to move files
+  # verbose - include verbose in console
+  # recursive - get files from sub directories
+  # force - override duplicates
+  # launch - open folder when complete
+  # pretend - only ask like your going to move stuff, dont actually do it
+  # dry - move all files to root of output (dont organgize)
+  # tree mode - include sub directories
 
-  attr_accessor :input, :output, :verbose, :recursive, :force, :launch, :straight, :files
 
-  VERSION= "0.3"
+  attr_accessor :input, :output, :verbose, :recursive, :force, :launch, :dry, :pretend, :files
+
+  VERSION= "0.4"
 
   def initialize(p={})
     @input = valid_dir(p[:input]) || slash!(Dir.pwd)
@@ -29,7 +41,8 @@ class Harmonize
     @recursive = p[:recursive] || false
     @force = p[:force] || false
     @launch = p[:launch] || false
-    @straight = p[:straight] || false
+    @dry = p[:dry] || false
+    @pretend = p[:pretend] || false
     @files = Array.new
   end
 
@@ -74,7 +87,11 @@ class Harmonize
       obj[:file_extensions] = %w(css html coffee js php xhtml java py pl cs c lua h cpp class swift scss less rb sh bat)
     elsif %w(archives zips tars).include?(_key)
       obj[:name] = "Archives"
-      obj[:file_extensions] = %w(7z gz rar bz2 bz tar zip zipx )
+      obj[:file_extensions] = %w(7z gz rar bz2 bz tar zip zipx)
+    elsif %w(* everything).include?(_key)
+      obj[:name] = "Everything"
+      obj[:file_extensions] = %w(*)
+      pu "This fool wants everthing!"
     else
       puts @opt_parser
       error("Incorrect type (#{colorize(_key,'red')}) there is no file extensions for this type. Please try again") and return nil
@@ -120,21 +137,17 @@ class Harmonize
   
   # Gather the files based on tag
   def files(argv)
-    tags and return if argv.to_s.upcase == 'TAGS'
+    tags if argv.to_s.upcase == 'TAGS'
     objs = setup(argv.to_s.downcase)
     return nil if objs.nil?
     objs.each { |obj|
-      # TODO - Everything mode, moves all files { @recursive ? Dir["#{output_dir(key)}**/*.*"] }
-      obj[:file_extensions].each { |ext|
-        if @recursive
+        obj[:file_extensions].each { |ext|
+          if @recursive
           arr = Dir["#{@input}**/*.#{ext}"]
           arr.each {|file| 
             obj[:files] << file
           }
-          #obj[:files] << Dir["#{@input}**/*.#{ext}"]
         else
-          #merged = obj[:files] | Dir["#{@input}*.#{ext}"]
-          #obj[:files] = merged
           arr = Dir["#{@input}/*.#{ext}"]
           unless arr.empty?
               arr.each {|file| 
@@ -145,7 +158,7 @@ class Harmonize
           # Someday, i may wanna do a 2d array by file type for organization
           # by file extension.
         end
-      }
+        }
     }
     @files = objs
   end
@@ -156,22 +169,22 @@ class Harmonize
       if hsh[:files].count == 0
         pu "No (#{colorize(hsh[:name],'light green')}) files to move"
       else
-        out = @straight ? slash!(@output) : output_dir(hsh[:name])
+        out = @dry ? slash!(@output) : output_dir(hsh[:name])
         fc = 0
         hsh[:files].each {|file|
           if @force
-            FileUtils.mv(file, out, {:verbose => @verbose, :force => @force})
+            FileUtils.mv(file, out, {:verbose => @verbose, :force => @force}) unless @pretend
             fc+=1
           else
             if File.exists?("#{out}/#{File.basename(file)}")
               pu "Duplicate filename (#{colorize(file,'light red')}), leaving file alone"
             else
               fc+=1
-              FileUtils.mv(file, out, {:verbose => @verbose})
+              FileUtils.mv(file, out, {:verbose => @verbose}) unless @pretend
             end
           end
         }
-        pu "Moved #{colorize(fc,'light purple')} / #{colorize(hsh[:files].count,'light purple')} (#{colorize(hsh[:name],'light green')}) files to #{colorize(out,'light blue')}"
+        pu "#{@pretend ? 'Would have moved ' : 'Moved '} #{colorize(fc,'light purple')} / #{colorize(hsh[:files].count,'light purple')} (#{colorize(hsh[:name],'light green')}) files to #{colorize(out,'light blue')}"
       end
     }
     pu "Your files have been #{colorize(' H A R M O N I Z E D ', 'light purple', 'black')}"
@@ -381,12 +394,16 @@ BANNER
       @options[:force] = true
     end
   
-    opt.on("-s", "--straight", "#{colorize('Straight ', 'cyan')}- Move files to output's root instead of sub folders") do
-      @options[:straight] = true
+    opt.on("-d", "--dry", "#{colorize('Dry run ', 'cyan')}- Move files to output's root (Dont Organgize only Move)") do
+      @options[:dry] = true
     end
   
     opt.on("-l", "--launch", "#{colorize('Launch ', 'cyan')}- Open the output folder when completed") do
       @options[:launch] = true
+    end
+    
+    opt.on("-l", "--pretend", "#{colorize('Pretend ', 'cyan')}- Does everything but actually move your files") do
+      @options[:pretend] = true
     end
 
     opt.on("-r", "--resursive", "#{colorize('Resursive ', 'cyan')}- Include all sub directory files { BE CAREFUL }!") do
