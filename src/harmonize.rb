@@ -280,7 +280,7 @@ if __FILE__ == $0
     opt.banner = <<-BANNER
 .
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-|#{colorize('             ','black','black')}#{colorize('~~~~~~','yellow','black')}#{colorize('>>>','cyan','black')}#{colorize('    ','black','black')}#{colorize('H A R M O N I Z E','light purple', 'black')}#{colorize('    ','black','black')}#{colorize('<<<','cyan','black')}#{colorize('~~~~~~','yellow','black')}#{colorize('              ','black','black')}|
+|#{colorize('             ','black','black')}#{colorize('~~~~~~','light blue','black')}#{colorize('>>>','light green','black')}#{colorize('    ','black','black')}#{colorize('H A R M O N I Z E','light purple', 'black')}#{colorize('    ','black','black')}#{colorize('<<<','light green','black')}#{colorize('~~~~~~','light blue','black')}#{colorize('              ','black','black')}|
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 BANNER
     opt.separator "|                                                                      |"
@@ -358,6 +358,11 @@ BANNER
     opt.separator "|  #{colorize('all files where a duplicate file name exists.','light red')}                       |"
     opt.separator "|                                                                      |"
     opt.separator "|  #{colorize('(BE CAREFUL) there are no DO OVERs with (-f, --force)','red')}               |"
+    opt.separator "|                                                                      |"
+    opt.separator "|  #{colorize(' ~ : $','white')} #{colorize('harmonize \'*\' -i ~/Downloads -o ~/NewDownloads','light purple')}               |"
+    opt.separator "|                                                                      |"
+    opt.separator "|  #{colorize('All files & folders will be moved from ( ~/Downloads ) to','light red')}           |"
+    opt.separator "|  #{colorize('( ~/NewDownloads ). This is similar to a normal cut & paste.','light red')}        |"
     opt.separator "|                                                                      |"
     opt.separator "| #{colorize('.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . ')} |"
     opt.separator "|                                                                      |"
