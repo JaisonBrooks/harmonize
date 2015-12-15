@@ -7,7 +7,7 @@ So... Without further ado! Ladies and Gentleman, I present you with ***Harmonize
 ***Harmonize***, is a Ruby script that helps you organize your files by grouping them together into Types. For instance, it can group your jpg and png files as photos and your pdf and doc files as documents and plenty more file extensions and groupings. The tool features plenty of easy to use command line options which allows you to get lots of work done, quickly and easily, with just a simple command. This tool is used from within the OSX Terminal.app or any other prefered terminal.
 
 
-### Usage
+## Usage
 ```~:$ harmonize TYPES ARGUMENTS```
 
 You can view the help page by executing ```harmonize -h``` to learn more about how to use Harmonize.
@@ -74,7 +74,7 @@ To view the latest, run ```harmonize -h```.
 
 **OUTPUT** : The OUTPUT directory defaults to your Home folder (~/ or /Users/USERNAME). This is nice because OSX have default folders for things like Pictures, Documents, Music and more. 
 
-### Setup / Installation
+## Setup / Installation
 * Clone the Repo
 
 ```
@@ -95,11 +95,11 @@ The ```setup.sh``` will create a executable file and store it in => /usr/local/b
 
 ***NOTE*** Please ensure that /usr/local/bin is stored in your PATH!
 
-### Disclaimer
+## Disclaimer
 This script is new and could be considered **alpha** or **not fully* tested and could result in overwritten files, file corruption, script execution errors, bugs, random explosions and more. You have been warned! and by using this tool, you agree that I AM NOT responsible for lost or damange to your files.
 
-### Version
+## Version
 0.6
 
-### Author
+## Author
 Jaison Brooks
