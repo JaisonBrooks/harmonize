@@ -11,11 +11,43 @@ So, without further ado. Ladies and Gents, I present you with ***Harmonize***
 ## Supported Types and Arguments
 
 ### Types
-
+```ruby
+Standard Types & Extensions:
+ Pictures
+  TAGS: ["pictures", "pics", "images", "photos"]
+  EXTS: ["jpg", "gif", "jpeg", "png", "svg", "tif", "tiff", "ico", "raw", "bmp", "psd", "webp", "ai", "eps", "ps", "svg"]
+ Movies
+  TAGS: ["movies", "videos", "shows", "tv"]
+  EXTS: ["mov", "mpeg", "avi", "mp4", "arf", "mkv", "webm", "qt", "wmv", "rm", "m4v", "flv", "avc", "vob", "mjpeg", "egp", "mpg", "3gpp", "mpg4", "xvid", "mjpg"]
+ Music
+  TAGS: ["music", "tunes", "jams"]
+  EXTS: ["aif", "iff", "m3u", "m4a", "mid", "mp3", "mpa", "ra", "wav", "wma", "aac"]
+ Documents
+  TAGS: ["documents", "docs"]
+  EXTS: ["doc", "docx", "log", "msg", "odt", "pages", "rtf", "tex", "txt", "wpd", "wps", "xlr", "xls", "xps", "potx", "potm", "xlsx", "pps", "ppsx", "odp", "pptx", "ppt", "pdf", "ppdf"]
+ Data
+  TAGS: ["data"]
+  EXTS: ["csv", "dat", "gbr", "key", "keychain", "vcf", "json", "xm", "mdb", "pdb", "sql", "dbl"]
+ Programs
+  TAGS: ["programs", "exec", "executables", "binaries"]
+  EXTS: ["apk", "app", "deb", "jar", "exe", "iso", "pkg", "dmg"]
+ Code
+  TAGS: ["code", "scripts"]
+  EXTS: ["css", "html", "coffee", "js", "php", "xhtml", "java", "py", "pl", "cs", "c", "lua", "h", "cpp", "class", "swift", "scss", "less", "rb", "sh", "bat"]
+ Archives
+  TAGS: ["archives", "zips"]
+  EXTS: ["zip", "7z", "gz", "rar", "bz2", "bz", "tar", "zipx"]
+Special Types:
+ All
+  TAGS: All the above Tags
+ Everything
+  TAGS: ["*", "everything"]
+  EXTS: All files and folders
+```
 
 ****Note**** - Run ```harmonize types``` to view latest types & supported file extensions
 ### Arguments
-```
+```ruby
 -i, --input FOLDER_PATH   :  Where to look for files ( Default: Current Directory )
 -o, --output FOLDER_PATH  :  Where to moves your files too ( Default: ~/ )
 -r, --recursive           :  Include all sub folders and files ( BE CAREFUL )
@@ -28,14 +60,15 @@ So, without further ado. Ladies and Gents, I present you with ***Harmonize***
 ```
 ****Note**** - Run ```harmonize -h``` to view latest arguments
 
+### Defaults
+**INPUT** : The INPUT directory defaults to your current working directory, or the location your at when executing harmonize. You can always specify a different input by using the ```-i``` option.
 
+**OUTPUT** : The OUTPUT directory defaults to your Home folder (~/ or /Users/USERNAME). This is nice because OSX have default folders for things like Pictures, Documents, Music and more. 
 
-With the ability to let harmonize use your default OSX folders (~/Pictures,~/Documents, etc) flexible INPUT / OUPUT arguments allow you to organize files quickly. With simple file type keyboards, you can easily move specific types of files between directories or even just allow Harmonize to move and organize everything for you.
+### Disclaimer
+This script is new and could be considered **alpha** or **not fully* tested and could result in overwritten files, file corruption, script execution errors, bugs, random explosions and more. You have been warned! and by using this tool, you agree that I AM NOT responsible for lost or damange to your files.
 
-!WARNING!
-This script is alpha and could result in overwritten files, file corruption, script execution errors, bugs, random explosions and more. You have been warned! and by using this tool, you agree that I AM NOT responsible for lost or damange to your files.
-
-### Setup
+### Setup / Installation
 * Clone the Repo
 
 ```
@@ -45,14 +78,13 @@ git clone https://github.com/JaisonBrooks/harmonize.git
 * Run the following commands (from the root of the project):
  
 ```
-cd harmonize.git/src/
-chmod u+x init_harmonize.sh
-sh ./init_harmonize.sh
+chmod u+x src/setup.sh
+sh src/setup.sh
 ```
 
 * Wait a moment for the script to complete
 
-The ```init_harmonize.sh``` creates a executable binary file and stores it here => /usr/loca/bin/harmonize.
+The ```setup.sh``` will create a executable file and store it as => /usr/loca/bin/harmonize.
 
 ***NOTE*** Please ensure that /usr/local/bin is stored in your PATH!
 
@@ -62,17 +94,11 @@ Run the following command to view the help page which contains the supported fil
 ```
 harmonize -h
 ```
+There is plenty of good helpful information in the help page, including examples and more.
 
-General Info (***subject to change***):
-
-![Alt text](/res/screenshot_help_harmonize.png?raw=true "General Info")
-
-Supported Params (***subject to change***):
-
-![Alt text](/res/screenshot_params_harmonize.png?raw=true "Support Params")
 
 ### Version
-0.3
+0.6
 
 ### Author
 Jaison Brooks
