@@ -6,7 +6,11 @@ So... Without further ado! Ladies and Gentleman, I present you with ***Harmonize
 ## About
 ***Harmonize***, is a Ruby script that helps you organize your files by grouping them together into Types. For instance, it can group your jpg and png files as photos and your pdf and doc files as documents and plenty more file extensions and groupings. The tool features plenty of easy to use command line options which allows you to get lots of work done, quickly and easily, with just a simple command. This tool is used from within the OSX Terminal.app or any other prefered terminal.
 
-Usage: ```~:$ harmonize TYPES ARGUMENTS``` 
+
+### Usage
+```~:$ harmonize TYPES ARGUMENTS```
+
+You can view the ```-h``` to view the help page for more information on how to use Harmonize.
 
 ### Types
 #### Standard
@@ -36,17 +40,18 @@ Archives
  	Tags: 'archives', 'zips'
  	Exts: 'zip', '7z', 'gz', 'rar', 'bz2', 'bz', 'tar', 'zipx'
  ```
+ The Standard types can used individually (```harmonize pics```) or combined in a comma seperated list (```harmonize 'pics,archives,programs'```). ***Note***, you must include a single quote at the beginning and end of the comma seperated list.
+ 
 ####Special
 ```
 All or all
  Desc: Specifying all allow you to include all the default types and their cooresponding file extensions when looking up the files you want to harmonize.
+ ***Note***, if you dont specify a TYPE (```harmonize ```) when executing the script, Harmonize will assume you want to want to harmonize files for all supported file groups.
 Everything or '*'
- Desc: Using this option will perform a straight cut and paste, moving all files and folders from your INPUT directory to your OUPUT directory.
+ Desc: Using this option will perform a straight cut and paste, moving all files and folders from your INPUT directory to your OUPUT directory. ***Note***, you must include a single quote at the beginning and end of the *.
 ```
+To ensure your aware of all the current types and file extensions, please run ```harmonize types``` to view latest information.
 
-TYPES can be written as a single value (```harmonize pictures```) or as a comma seperated list (```harmonize 'pictures,movies,music'```). ***Note***, you need to include a single quote at the beginning and end of the comma seperated list. This also applyes for the Special Type (Everything), which allows you to use a wildcard (```harmonize '*'```) to perform a straight cut and paste of all files in the input directory to the specified output directory (```-o ~/FooBar```).
-
-****Note**** - Run ```harmonize types``` to view latest types & supported file extensions
 ### Arguments
 ```ruby
 -i, --input FOLDER_PATH   :  Where to look for files ( Default: Current Directory )
@@ -73,26 +78,19 @@ TYPES can be written as a single value (```harmonize pictures```) or as a comma 
 git clone https://github.com/JaisonBrooks/harmonize.git
 ```
 
-* Run the following commands (from the root of the project):
+* Run the following commands:
  
 ```
+cd Harmonize.git
 chmod u+x src/setup.sh
 sh src/setup.sh
 ```
 
-* Wait a moment for the script to complete
+* Await script completion:
 
-The ```setup.sh``` will create a executable file and store it as => /usr/loca/bin/harmonize.
+The ```setup.sh``` will create a executable file and store it in => /usr/local/bin.
 
 ***NOTE*** Please ensure that /usr/local/bin is stored in your PATH!
-
-### Usage
-Run the following command to view the help page which contains the supported file types, arguments and examples on how to use the tool.
-
-```
-harmonize -h
-```
-There is plenty of good helpful information in the help page, including examples and more.
 
 ### Disclaimer
 This script is new and could be considered **alpha** or **not fully* tested and could result in overwritten files, file corruption, script execution errors, bugs, random explosions and more. You have been warned! and by using this tool, you agree that I AM NOT responsible for lost or damange to your files.
