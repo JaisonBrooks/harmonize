@@ -45,6 +45,8 @@ Special Types:
   EXTS: All files and folders
 ```
 
+Types can be used as a single value (```harmonize pictures```) or as a command seperated list (```harmonize 'pictures,movies,music'```). ***Note***, you need to include a single quotes at the beginning and end of a command seperate list of types or the wildcard type '*'.
+
 ****Note**** - Run ```harmonize types``` to view latest types & supported file extensions
 ### Arguments
 ```ruby
