@@ -185,7 +185,7 @@ class Harmonize
     pu "#{Harmonize.colorize('Standard Types & Extensions:', 'light purple')}"
     KEYS[:standard].keys.each {|key| 
       types = KEYS[:standard][key]
-      obj = get_tae_obj(key.to_s)
+      obj = tae_obj(key.to_s)
       pu "  #{Harmonize.colorize(obj[:name], 'light green')}"
       pu "    TAGS: #{Harmonize.colorize(types, 'light blue')}"
       pu "    EXTS: #{Harmonize.colorize(obj[:file_extensions],'light blue')}"
