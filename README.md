@@ -12,42 +12,39 @@ Usage: ```~:$ harmonize TYPES ARGUMENTS```
 #### Standard
 ```
 Pictures
- TAGS: ["pictures", "pics", "images", "photos"]
- EXTS: ["jpg", "gif", "jpeg", "png", "svg", "tif", "tiff", "ico", "raw", "bmp", "psd", "webp", "ai", "eps", "ps", "svg"]
+	Tags: 'pictures', 'pics', 'images', 'photos'
+	Exts: 'jpg', 'gif', 'jpeg', 'png', 'svg', 'tif', 'tiff', 'icon', 'raw', 'bmp', 'psd', 'webp', 'ai', 'eps', 'ps', 'svg'
 Movies
- TAGS: ["movies", "videos", "shows", "tv"]
- EXTS: ["mov", "mpeg", "avi", "mp4", "arf", "mkv", "webm", "qt", "wmv", "rm", "m4v", "flv", "avc", "vob", "mjpeg", "egp", "mpg", "3gpp", "mpg4", "xvid", "mjpg"]
+	Tags: 'movies', 'videos', 'shows', 'tv'
+	Exts: 'mov', 'mpeg', 'avi', 'mp4', 'arf', 'mkv', 'webm', 'qt', 'wmv', 'rm', 'm4v', 'flv', 'avc', 'vob', 'mjpeg', 'egp', 'mpg', '3gpp', 'mpg4', 'xvid', 'mjpg' 
 Music
- TAGS: ["music", "tunes", "jams"]
- EXTS: ["aif", "iff", "m3u", "m4a", "mid", "mp3", "mpa", "ra", "wav", "wma", "aac"]
+ 	Tags: 'music', 'tunes', 'jams'
+ 	Exts: 'aif', 'iff', 'm3u', 'm4a', 'mid', 'mp3', 'mpa', 'ra', 'wav', 'wma', 'aac'
 Documents
- TAGS: ["documents", "docs"]
- EXTS: ["doc", "docx", "log", "msg", "odt", "pages", "rtf", "tex", "txt", "wpd", "wps", "xlr", "xls", "xps", "potx", "potm", "xlsx", "pps", "ppsx", "odp", "pptx", "ppt", "pdf", "ppdf"]
+ 	Tags: 'documents', 'docs'
+ 	Exts: 'doc', 'docx', 'log', 'msg', 'odt', 'pages', 'rtf', 'tex', 'txt', 'wpd', 'wps', 'xlr', 'xls', 'xps', 'potx', 'potm', 'xlsx', 'pps', 'ppsx', 'odp', 'pptx', 'ppt', 'pdf', 'ppdf'
 Data
- TAGS: ["data"]
- EXTS: ["csv", "dat", "gbr", "key", "keychain", "vcf", "json", "xm", "mdb", "pdb", "sql", "dbl"]
+ 	Tags: 'data'
+ 	Exts: 'csv', 'dat', 'gbr', 'key', 'keychain', 'vcf', 'json', 'xm', 'mdb', 'pdb', 'sql', 'dbl'
 Programs
- TAGS: ["programs", "exec", "executables", "binaries"]
- EXTS: ["apk", "app", "deb", "jar", "exe", "iso", "pkg", "dmg"]
+ 	Tags: 'programs', 'exec', 'executables', 'binaries'
+ 	Exts: 'apk', 'app', 'deb', 'jar', 'exe', 'iso', 'pkg', 'dmg'
 Code
- TAGS: ["code", "scripts"]
- EXTS: ["css", "html", "coffee", "js", "php", "xhtml", "java", "py", "pl", "cs", "c", "lua", "h", "cpp", "class", "swift", "scss", "less", "rb", "sh", "bat"]
+ 	Tags: 'code', 'scripts'
+ 	Exts: 'css', 'html', 'coffee', 'js', 'php', 'xhtml', 'java', 'py', 'pl', 'cs', 'c', 'lua', 'h', 'cpp', 'class', 'swift', 'scss', 'less', 'rb', 'sh', 'bat'
 Archives
- TAGS: ["archives", "zips"]
- EXTS: ["zip", "7z", "gz", "rar", "bz2", "bz", "tar", "zipx"]
+ 	Tags: 'archives', 'zips'
+ 	Exts: 'zip', '7z', 'gz', 'rar', 'bz2', 'bz', 'tar', 'zipx'
  ```
 ####Special
 ```
-All
- TAGS: All the above Tags
-Everything
- TAGS: ["*", "everything"]
- EXTS: All files and folders
+All or all
+ Desc: Specifying all, you telling harmonize to include all the default types and their cooresponding file extensions
+Everything or '*'
+ Desc: Using the wildcard option will perform a straight cut and paste, moving all files and folders from your INPUT directory to your OUPUT directory.
 ```
 
-The TAGS above are other keywords you can use that refer to the same file type group. For Example if i executed ```harmonize pics```. This would execute the same as if you types ```harmonize pictures``` or even ```harmonize images```. The same goes for the other types and their tags.
-
-Types can be written as a single value (```harmonize pictures```) or as a comma seperated list (```harmonize 'pictures,movies,music'```). ***Note***, you need to include a single quote at the beginning and end of the comma seperated list. This also applyes for the Special Type (Everything), which allows you to use a wildcard (```harmonize '*'```) to perform a straight cut and paste of all files in the input directory to the specified output directory (```-o ~/FooBar```).
+TYPES can be written as a single value (```harmonize pictures```) or as a comma seperated list (```harmonize 'pictures,movies,music'```). ***Note***, you need to include a single quote at the beginning and end of the comma seperated list. This also applyes for the Special Type (Everything), which allows you to use a wildcard (```harmonize '*'```) to perform a straight cut and paste of all files in the input directory to the specified output directory (```-o ~/FooBar```).
 
 ****Note**** - Run ```harmonize types``` to view latest types & supported file extensions
 ### Arguments
