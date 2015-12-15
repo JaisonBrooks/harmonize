@@ -8,9 +8,7 @@ So... Without further ado! Ladies and Gentleman, I present you with ***Harmonize
 
 For instance, it can group your jpg and png files as photos and your pdf and doc files as documents and several other groups. 
 
-The tool also features plenty of easy to use command line argumentions and features, which allow you to get lots of work done, quickly and easily, by executing a simple command.
-
-This tool is executed from your Terminal.app or any other Terminal type application.
+The tool also features plenty of easy to use command line arguments, which allows you to get lots of works done, quickly and easily, by executing a simple command from your Terminal. You can really tailor this tool to fit your needs and take a look at the Arguments sections for more information.
 
 ## Usage
 ```~:$ harmonize TYPES ARGUMENTS```
