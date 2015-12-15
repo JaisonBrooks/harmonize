@@ -29,7 +29,7 @@ class Harmonize
   
   attr_accessor :input, :output, :verbose, :recursive, :force, :launch, :dry, :pretend, :cop, :files
 
-  VERSION= "0.5"
+  VERSION= "0.6"
   KEYS={
     :standard => {
       :pictures => %w(pictures pics images photos),
