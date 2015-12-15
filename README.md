@@ -69,9 +69,6 @@ Types can be written as a single value (```harmonize pictures```) or as a comma 
 
 **OUTPUT** : The OUTPUT directory defaults to your Home folder (~/ or /Users/USERNAME). This is nice because OSX have default folders for things like Pictures, Documents, Music and more. 
 
-### Disclaimer
-This script is new and could be considered **alpha** or **not fully* tested and could result in overwritten files, file corruption, script execution errors, bugs, random explosions and more. You have been warned! and by using this tool, you agree that I AM NOT responsible for lost or damange to your files.
-
 ### Setup / Installation
 * Clone the Repo
 
@@ -100,6 +97,8 @@ harmonize -h
 ```
 There is plenty of good helpful information in the help page, including examples and more.
 
+### Disclaimer
+This script is new and could be considered **alpha** or **not fully* tested and could result in overwritten files, file corruption, script execution errors, bugs, random explosions and more. You have been warned! and by using this tool, you agree that I AM NOT responsible for lost or damange to your files.
 
 ### Version
 0.6
