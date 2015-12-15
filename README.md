@@ -45,10 +45,13 @@ Archives
 ####Special
 ```
 All or all
-	Description: Includes all the Standard types and their cooresponding files extensions. NOTE! This will also be the case, when you DONT specify a TYPE (```harmonize```).
-Everything or '*'
- Description: Performs a straight cut and paste, by moving all files and folders from your INPUT directory to your OUPUT directory. ***Note***, you must include a single quote at the beginning and end if you use the *.
 ```
+Includes all the Standard types and their cooresponding files extensions. NOTE! This will also be the case, when you DONT specify a TYPE (```harmonize```).
+```
+Everything or '*'
+```
+Performs a straight cut and paste, by moving all files and folders from your INPUT directory to your OUPUT directory. ***Note***, you must include a single quote at the beginning and end if you use the *.
+
 To view the latest, run ```harmonize types```.
 
 ### Arguments
