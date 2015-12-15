@@ -8,41 +8,41 @@ So... Without further ado! Ladies and Gentleman, I present you with ***Harmonize
 
 Usage: ```~:$ harmonize TYPES ARGUMENTS``` 
 
-## Supported Types and Arguments
-
 ### Types
-```ruby
-Standard Types & Extensions:
- Pictures
-  TAGS: ["pictures", "pics", "images", "photos"]
-  EXTS: ["jpg", "gif", "jpeg", "png", "svg", "tif", "tiff", "ico", "raw", "bmp", "psd", "webp", "ai", "eps", "ps", "svg"]
- Movies
-  TAGS: ["movies", "videos", "shows", "tv"]
-  EXTS: ["mov", "mpeg", "avi", "mp4", "arf", "mkv", "webm", "qt", "wmv", "rm", "m4v", "flv", "avc", "vob", "mjpeg", "egp", "mpg", "3gpp", "mpg4", "xvid", "mjpg"]
- Music
-  TAGS: ["music", "tunes", "jams"]
-  EXTS: ["aif", "iff", "m3u", "m4a", "mid", "mp3", "mpa", "ra", "wav", "wma", "aac"]
- Documents
-  TAGS: ["documents", "docs"]
-  EXTS: ["doc", "docx", "log", "msg", "odt", "pages", "rtf", "tex", "txt", "wpd", "wps", "xlr", "xls", "xps", "potx", "potm", "xlsx", "pps", "ppsx", "odp", "pptx", "ppt", "pdf", "ppdf"]
- Data
-  TAGS: ["data"]
-  EXTS: ["csv", "dat", "gbr", "key", "keychain", "vcf", "json", "xm", "mdb", "pdb", "sql", "dbl"]
- Programs
-  TAGS: ["programs", "exec", "executables", "binaries"]
-  EXTS: ["apk", "app", "deb", "jar", "exe", "iso", "pkg", "dmg"]
- Code
-  TAGS: ["code", "scripts"]
-  EXTS: ["css", "html", "coffee", "js", "php", "xhtml", "java", "py", "pl", "cs", "c", "lua", "h", "cpp", "class", "swift", "scss", "less", "rb", "sh", "bat"]
- Archives
-  TAGS: ["archives", "zips"]
-  EXTS: ["zip", "7z", "gz", "rar", "bz2", "bz", "tar", "zipx"]
-Special Types:
- All
-  TAGS: All the above Tags
- Everything
-  TAGS: ["*", "everything"]
-  EXTS: All files and folders
+#### Standard
+```
+Pictures
+ TAGS: ["pictures", "pics", "images", "photos"]
+ EXTS: ["jpg", "gif", "jpeg", "png", "svg", "tif", "tiff", "ico", "raw", "bmp", "psd", "webp", "ai", "eps", "ps", "svg"]
+Movies
+ TAGS: ["movies", "videos", "shows", "tv"]
+ EXTS: ["mov", "mpeg", "avi", "mp4", "arf", "mkv", "webm", "qt", "wmv", "rm", "m4v", "flv", "avc", "vob", "mjpeg", "egp", "mpg", "3gpp", "mpg4", "xvid", "mjpg"]
+Music
+ TAGS: ["music", "tunes", "jams"]
+ EXTS: ["aif", "iff", "m3u", "m4a", "mid", "mp3", "mpa", "ra", "wav", "wma", "aac"]
+Documents
+ TAGS: ["documents", "docs"]
+ EXTS: ["doc", "docx", "log", "msg", "odt", "pages", "rtf", "tex", "txt", "wpd", "wps", "xlr", "xls", "xps", "potx", "potm", "xlsx", "pps", "ppsx", "odp", "pptx", "ppt", "pdf", "ppdf"]
+Data
+ TAGS: ["data"]
+ EXTS: ["csv", "dat", "gbr", "key", "keychain", "vcf", "json", "xm", "mdb", "pdb", "sql", "dbl"]
+Programs
+ TAGS: ["programs", "exec", "executables", "binaries"]
+ EXTS: ["apk", "app", "deb", "jar", "exe", "iso", "pkg", "dmg"]
+Code
+ TAGS: ["code", "scripts"]
+ EXTS: ["css", "html", "coffee", "js", "php", "xhtml", "java", "py", "pl", "cs", "c", "lua", "h", "cpp", "class", "swift", "scss", "less", "rb", "sh", "bat"]
+Archives
+ TAGS: ["archives", "zips"]
+ EXTS: ["zip", "7z", "gz", "rar", "bz2", "bz", "tar", "zipx"]
+ 
+####Special
+```
+All
+ TAGS: All the above Tags
+Everything
+ TAGS: ["*", "everything"]
+ EXTS: All files and folders
 ```
 
 The TAGS above are other keywords you can use that refer to the same file type group. For Example if i executed ```harmonize pics```. This would execute the same as if you types ```harmonize pictures``` or even ```harmonize images```. The same goes for the other types and their tags.
