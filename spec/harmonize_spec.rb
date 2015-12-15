@@ -5,9 +5,9 @@
 require 'spec_helper'
 require File.expand_path('../src/harmonize.rb', File.dirname(__FILE__))
 
-RSpec.describe Harmonize, "when" do
+RSpec.describe Harmonize do
   
-  context "initiated w/out params" do
+  context 'without options' do
     
     before(:each) do
       @harmonize = Harmonize.new
@@ -18,38 +18,46 @@ RSpec.describe Harmonize, "when" do
     end
     
     context 'should have attributes' do
-      
-      it '#INPUT' do
+      it 'Input' do
         expect(@harmonize.input.nil?).to_not eq true
         expect(@harmonize.input).to eq @harmonize.slash!(Dir.pwd)
       end
-      it '#OUTPUT' do
+      it 'Output' do
         expect(@harmonize.output.nil?).to_not eq true
         expect(@harmonize.output).to eq @harmonize.slash!(Dir.home)
       end
-      it '#VERBOSE' do
+      it 'Verbose' do
         expect(@harmonize.verbose.nil?).to_not eq true
         expect(@harmonize.verbose).to eq false
       end
-      it '#RECURSIVE' do
+      it '#Recursive' do
         expect(@harmonize.recursive.nil?).to_not eq true
         expect(@harmonize.recursive).to eq false
       end
-      it '#FORCE' do
+      it 'Force' do
         expect(@harmonize.force.nil?).to_not eq true
         expect(@harmonize.force).to eq false
       end
-      it '#LAUNCH' do
+      it 'Launch' do
         expect(@harmonize.launch.nil?).to_not eq true
         expect(@harmonize.launch).to eq false
       end
-      
+      it 'Dry' do
+        expect(@harmonize.dry.nil?).to_not eq true
+        expect(@harmonize.dry).to eq false
+      end
+      it 'Pretend' do
+        expect(@harmonize.pretend.nil?).to_not eq true
+        expect(@harmonize.pretend).to eq false
+      end
+      it 'Cop' do
+        expect(@harmonize.cop.nil?).to_not eq true
+        expect(@harmonize.cop).to eq false
+      end
     end
         
   end
-  
-  context 'initiated w/ params' do
-    
+  context 'with options' do
     before(:each) do
       @harmonize = Harmonize.new({
         :input => File.expand_path('spec/test_files/'), 
@@ -57,41 +65,117 @@ RSpec.describe Harmonize, "when" do
         :verbose => true, 
         :recursive => true, 
         :force => true, 
-        :launch => true
+        :launch => true,
+        :dry => true,
+        :pretend => true,
+        :cop => true
         })
     end
-    
     it 'should not be nil' do
       expect(@harmonize.nil?).to_not eq true
     end
-    
-    context 'should have attributes' do
-      it '#INPUT' do
+    context 'has attribute' do
+      it 'Input' do
         expect(@harmonize.input.nil?).to_not eq true
         expect(@harmonize.input).to eq "#{File.expand_path('spec/test_files')}/"
       end
-      it '#OUTPUT' do
+      it 'Output' do
         expect(@harmonize.output.nil?).to_not eq true
         expect(@harmonize.output).to eq "#{File.expand_path('spec/test_output')}/"
       end
-      it '#VERBOSE' do
+      it 'Verbose' do
         expect(@harmonize.verbose.nil?).to_not eq true
         expect(@harmonize.verbose).to eq true
       end
-      it '#RECURSIVE' do
+      it 'Recursive' do
         expect(@harmonize.recursive.nil?).to_not eq true
         expect(@harmonize.recursive).to eq true
       end
-      it '#FORCE' do
+      it 'Force' do
         expect(@harmonize.force.nil?).to_not eq true
         expect(@harmonize.force).to eq true
       end
-      it '#LAUNCH' do
+      it 'Launch' do
         expect(@harmonize.launch.nil?).to_not eq true
         expect(@harmonize.launch).to eq true
       end
+      it 'Dry' do
+        expect(@harmonize.dry.nil?).to_not eq true
+        expect(@harmonize.dry).to eq true
+      end
+      it 'Pretend' do
+        expect(@harmonize.pretend.nil?).to_not eq true
+        expect(@harmonize.pretend).to eq true
+      end
+      it 'Cop' do
+        expect(@harmonize.cop.nil?).to_not eq true
+        expect(@harmonize.cop).to eq true
+      end
     end
+    context 'should '
     
+  end
+  context 'regardless' do
+    context 'has KEYS' do
+      it 'Standard' do
+        expect(Harmonize::KEYS[:standard].nil?).to_not eq true
+        expect(Harmonize::KEYS[:standard].keys.count).to be >= 1
+      end
+      it 'Special' do
+        expect(Harmonize::KEYS[:special].nil?).to_not eq true
+        expect(Harmonize::KEYS[:special].keys.count).to be >= 1
+      end
+    end
+    it 'has VERSION' do
+      expect(Harmonize::VERSION.nil?).to_not eq true
+      expect(Harmonize::VERSION.class).to eq String
+    end
+    context 'has Methods' do
+      context 'tae_obj' do
+        before(:all) do
+          @harmonize = Harmonize.new
+        end
+        it 'returns a hash, with data, for a valid key' do
+          result = @harmonize.tae_obj('pictures')
+          expect(result).to_not eq nil
+          expect(result.class).to eq Hash
+          expect(result[:key]).to eq 'pictures'
+          expect(result[:name]).to eq 'Pictures'
+          expect(result[:file_extensions].include?('png')).to eq true
+          expect(result[:files]).to eq Array.new
+          expect(result[:files].class).to eq Array
+        end
+        it 'exits the script when an invalid key is entered' do
+          expect{@harmonize.tae_obj('')}.to raise_error(SystemExit)
+        end
+      end
+      context 'to_hash' do
+        before(:all) do
+          @harmonize = Harmonize.new({
+          :input => File.expand_path('spec/test_files/'),
+          :output => File.expand_path('spec/test_output/'), 
+          :verbose => true, 
+          :recursive => true, 
+          :force => true, 
+          :launch => true,
+          :dry => true,
+          :pretend => true,
+          :cop => true
+        })
+        @result = @harmonize.to_hash
+        end
+        it 'returns a hash of variables' do
+          expect(@result[:input]).to eq @harmonize.input
+          expect(@result[:output]).to eq @harmonize.output
+          expect(@result[:verbose]).to eq @harmonize.verbose
+          expect(@result[:recursive]).to eq @harmonize.recursive
+          expect(@result[:launch]).to eq @harmonize.launch
+          expect(@result[:dry]).to eq @harmonize.dry
+          expect(@result[:pretend]).to eq @harmonize.pretend
+          expect(@result[:cop]).to eq @harmonize.cop
+        end
+      end
+    end
   end
   
 end

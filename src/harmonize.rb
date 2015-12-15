@@ -106,8 +106,6 @@ class Harmonize
       FileUtils.mkdir_p(_path, :mode => 0700)
       return slash!(_path)
     end
-    #return slash!(File.expand_path(path)) if Dir.exist?(path)
-    #return slash!(File.expand_path(FileUtils.mkdir_p(path, :mode => 0700).first)) if c
     nil
   end
 
@@ -260,7 +258,7 @@ class Harmonize
 
   # puts with app name
   def pu(txt=nil)
-    puts "[#{Harmonize}] #{txt || ''}"
+    puts "[#{Harmonize}] #{txt || ''}" if __FILE__ == $0
   end
   
   # Display an error
@@ -270,10 +268,11 @@ class Harmonize
   end
   
   # Output variables to JSON
-  def to_json
+  def to_hash
     {:input => @input, :output => @output, :verbose => @verbose, :recursive => @recursive, :force => @force, :dry => @dry, :pretend => @pretend, :launch => @launch, :cop => @cop, :files => @files}
   end
   
+  # Colorize puts statement
   def self.colorize(text, color = "default", bgColor = "default")
       colors = {"default" => "38","black" => "30","red" => "31","green" => "32","brown" => "33", "blue" => "34", "purple" => "35",
        "cyan" => "36", "gray" => "37", "dark gray" => "1;30", "light red" => "1;31", "light green" => "1;32", "yellow" => "1;33",
