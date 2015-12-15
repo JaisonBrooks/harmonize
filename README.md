@@ -93,7 +93,7 @@ sh src/setup.sh
 
 The ```setup.sh``` will create a executable file and store it in => /usr/local/bin.
 
-***NOTE*** Please ensure that /usr/local/bin is stored in your PATH!
+***Note***, Please ensure that /usr/local/bin is stored in your PATH!
 
 ## Disclaimer
 This script is new and could be considered **alpha** or **not fully* tested and could result in overwritten files, file corruption, script execution errors, bugs, random explosions and more. You have been warned! and by using this tool, you agree that I AM NOT responsible for lost or damange to your files.
