@@ -45,12 +45,11 @@ Archives
 ####Special
 ```
 All or all
- Desc: Specifying all allow you to include all the default types and their cooresponding file extensions when looking up the files you want to harmonize.
- ***Note***, if you dont specify a TYPE (```harmonize ```) when executing the script, Harmonize will assume you want to want to harmonize files for all supported file groups.
+	Description: Includes all the Standard types and their cooresponding files extensions. NOTE! This will also be the case, when you DONT specify a TYPE (```harmonize```).
 Everything or '*'
- Desc: Using this option will perform a straight cut and paste, moving all files and folders from your INPUT directory to your OUPUT directory. ***Note***, you must include a single quote at the beginning and end of the *.
+ Description: Performs a straight cut and paste, by moving all files and folders from your INPUT directory to your OUPUT directory. ***Note***, you must include a single quote at the beginning and end if you use the *.
 ```
-To ensure your aware of all the current types and file extensions, please run ```harmonize types``` to view latest information.
+To view the latest, run ```harmonize types```.
 
 ### Arguments
 ```ruby
@@ -64,7 +63,7 @@ To ensure your aware of all the current types and file extensions, please run ``
 -v, --verbose             :  Include extra output to the console regarding script exection
 -h, --help                :  View the help page
 ```
-****Note**** - Run ```harmonize -h``` to view latest arguments
+To view the latest, run ```harmonize -h```.
 
 ### Defaults
 **INPUT** : The INPUT directory defaults to your current working directory, or the location your at when executing harmonize. You can always specify a different input by using the ```-i``` option.
