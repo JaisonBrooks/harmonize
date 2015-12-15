@@ -1,12 +1,16 @@
 # Harmonize
-Let me ask you. How does your Downloads folder look? Is it unorganized, cluttered or a mess? Do you have any other folder's that look this way too?. If you do, then you know that the thought of organizing said files can be daunting, not to mention that actual act of doing it. On a second note, we also have to remember that file management and organization is constant action we must take in order to maintain a clean and organized file system.
+Let me ask you. How does your Downloads folder look? Is it unorganized, cluttered or a mess? Do you have any other folder's that look this way too?. If you do, then you know that the thought of organizing said files can be daunting, not to mention that actual act of doing it. On a second note, we also have to remember that file management and organization is a constant action we must take in order to maintain a clean and organized file system.
 
 So, without further ado. Ladies and Gents, I present you with ***Harmonize***
 
 ## About
-***Harmonize***, is a Ruby script that helps you organize your files by groups, like grouping your jpg's and png's as photos and pdf's xlsx's as documents and plenty more file extensions and grouping's, take a look below for all supports groups and extensions. The script also have has a very simple command line interface and ofter's alot of useful arguments to let you trailer the tool to fit your needs.
+***Harmonize***, is a Ruby script that helps you organize your files by groups, like grouping your jpg and png files as photos and your pdf and doc files as documents and plenty more file extensions and grouping's. Take a look below for all supported groups and extensions. With plenty of easy to use command line options, this tool allows you to get alots of work done by just a simple command in Terminal.
+
+Here is how the script is executed.
 
 ```~:$ harmonize TYPES ARGUMENTS``` 
+
+Notice the TYPES and ARGUMENTS in the above command. See below for all the supported TYPES and ARGUMENTS.
 
 ## Supported Types and Arguments
 
