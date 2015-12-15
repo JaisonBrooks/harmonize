@@ -232,7 +232,7 @@ class Harmonize
       if obj[:files].count === 0
          pu "No #{Harmonize.colorize(obj[:name],'light green')} to move" if @verbose
       else
-        output = @dry ? @output : "#{@output}#{pdir(obj[:name]}", true)
+        output = @dry ? @output : "#{@output}#{pdir(obj[:name],true)}"
         fc=0
         obj[:files].each {|file|
           if @force
