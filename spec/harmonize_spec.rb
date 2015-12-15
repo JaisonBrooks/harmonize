@@ -6,7 +6,6 @@ require 'spec_helper'
 require File.expand_path('../src/harmonize.rb', File.dirname(__FILE__))
 
 RSpec.describe Harmonize do
-  
   context 'without options' do
     
     before(:each) do
@@ -111,9 +110,7 @@ RSpec.describe Harmonize do
         expect(@harmonize.cop.nil?).to_not eq true
         expect(@harmonize.cop).to eq true
       end
-    end
-    context 'should '
-    
+    end  
   end
   context 'regardless' do
     context 'has KEYS' do
@@ -130,52 +127,82 @@ RSpec.describe Harmonize do
       expect(Harmonize::VERSION.nil?).to_not eq true
       expect(Harmonize::VERSION.class).to eq String
     end
-    context 'has Methods' do
-      context 'tae_obj' do
-        before(:all) do
-          @harmonize = Harmonize.new
-        end
-        it 'returns a hash, with data, for a valid key' do
-          result = @harmonize.tae_obj('pictures')
-          expect(result).to_not eq nil
-          expect(result.class).to eq Hash
-          expect(result[:key]).to eq 'pictures'
-          expect(result[:name]).to eq 'Pictures'
-          expect(result[:file_extensions].include?('png')).to eq true
-          expect(result[:files]).to eq Array.new
-          expect(result[:files].class).to eq Array
-        end
-        it 'exits the script when an invalid key is entered' do
-          expect{@harmonize.tae_obj('')}.to raise_error(SystemExit)
-        end
+  end
+  context 'methods' do
+    context 'tae_obj' do
+      before(:all) do
+        @harmonize = Harmonize.new
       end
-      context 'to_hash' do
-        before(:all) do
-          @harmonize = Harmonize.new({
-          :input => File.expand_path('spec/test_files/'),
-          :output => File.expand_path('spec/test_output/'), 
-          :verbose => true, 
-          :recursive => true, 
-          :force => true, 
-          :launch => true,
-          :dry => true,
-          :pretend => true,
-          :cop => true
-        })
-        @result = @harmonize.to_hash
-        end
-        it 'returns a hash of variables' do
-          expect(@result[:input]).to eq @harmonize.input
-          expect(@result[:output]).to eq @harmonize.output
-          expect(@result[:verbose]).to eq @harmonize.verbose
-          expect(@result[:recursive]).to eq @harmonize.recursive
-          expect(@result[:launch]).to eq @harmonize.launch
-          expect(@result[:dry]).to eq @harmonize.dry
-          expect(@result[:pretend]).to eq @harmonize.pretend
-          expect(@result[:cop]).to eq @harmonize.cop
-        end
+      it 'returns a hash, with data, for a valid key' do
+        result = @harmonize.tae_obj('pictures')
+        expect(result).to_not eq nil
+        expect(result.class).to eq Hash
+        expect(result[:key]).to eq 'pictures'
+        expect(result[:name]).to eq 'Pictures'
+        expect(result[:file_extensions].include?('png')).to eq true
+        expect(result[:files]).to eq Array.new
+        expect(result[:files].class).to eq Array
+      end
+      it 'exits the script when an invalid key is entered' do
+        expect{@harmonize.tae_obj('')}.to raise_error(SystemExit)
+      end
+    end
+    context 'to_hash' do
+      before(:all) do
+        @harmonize = Harmonize.new({
+        :input => File.expand_path('spec/test_files/'),
+        :output => File.expand_path('spec/test_output/'), 
+        :verbose => true, 
+        :recursive => true, 
+        :force => true, 
+        :launch => true,
+        :dry => true,
+        :pretend => true,
+        :cop => true
+      })
+      @result = @harmonize.to_hash
+      end
+      it 'returns a hash of variables' do
+        expect(@result[:input]).to eq @harmonize.input
+        expect(@result[:output]).to eq @harmonize.output
+        expect(@result[:verbose]).to eq @harmonize.verbose
+        expect(@result[:recursive]).to eq @harmonize.recursive
+        expect(@result[:launch]).to eq @harmonize.launch
+        expect(@result[:dry]).to eq @harmonize.dry
+        expect(@result[:pretend]).to eq @harmonize.pretend
+        expect(@result[:cop]).to eq @harmonize.cop
+      end
+    end
+    context 'error' do
+      before(:all) do
+        @harmonize = Harmonize.new
+      end
+      it 'should exit the script' do
+        expect{@harmonize.error('')}.to raise_error(SystemExit)
+      end
+      # it 'should output to console' do
+#           expect(@harmonize.error('test')).to eq @stderr.puts "[Harmonize] \033[0;31mtest\033[0m, \033[0;36mGame Over...\033[0m"
+#         end
+    end
+    context 'pu' do
+      before(:all) do
+        @harmonize = Harmonize.new
+      end
+      it 'should output to console' do
+        expect(@harmonize.pu).to eq $stderr.puts '[Harmonize] '
+      end
+      it 'should output to console if text was given' do
+        expect(@harmonize.pu('test')).to eq $stderr.puts '[Harmonize] test'
+      end
+    end
+    context 'finish' do
+      before(:all) do
+        @harmonize = Harmonize.new({:launch => true, :output => File.expand_path('spec/test_output/')})
+      end
+      it 'should open the output folder' do
+        @harmonize.should_receive('exec').with("open #{File.expand_path('spec/test_output/')}/")
+        @harmonize.finish
       end
     end
   end
-  
 end
