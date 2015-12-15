@@ -219,8 +219,25 @@ RSpec.describe Harmonize do
       before(:all) do
         @harmonize = Harmonize.new
       end
-      it 'should output to the console and exit' do
+      it 'should exit' do
         expect{@harmonize.types}.to raise_error(SystemExit)
+      end
+    end
+    context '#validate' do
+      context 'uses' do
+        before(:all) do
+          @harmonize = Harmonize.new
+        end
+        it 'invalid argv' do
+          expect{@harmonize.validate('asdf')}.to raise_error(SystemExit)
+        end
+        it 'everything type' do
+          expect{@harmonize.validate('everything')}.to raise_error(SystemExit)
+          #TODO - write a console expect
+        end
+        it 'types' do
+          expect{@harmonize.validate('types')}.to raise_error(SystemExit)
+        end
       end
     end
   end
