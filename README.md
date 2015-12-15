@@ -46,7 +46,7 @@ Archives
 ```
 All or all
 ```
-Includes all the Standard types and their cooresponding files extensions. NOTE! This will also be the case, when you DONT specify a TYPE (```harmonize```).
+Includes all the Standard types and their cooresponding files extensions. ***Note***, this will also be the case, if you ***DONT*** specify a TYPE (```harmonize```).
 ```
 Everything or '*'
 ```
