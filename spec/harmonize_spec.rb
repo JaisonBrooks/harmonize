@@ -129,7 +129,7 @@ RSpec.describe Harmonize do
     end
   end
   context 'methods' do
-    context 'tae_obj' do
+    context '#tae_obj' do
       before(:all) do
         @harmonize = Harmonize.new
       end
@@ -147,7 +147,7 @@ RSpec.describe Harmonize do
         expect{@harmonize.tae_obj('')}.to raise_error(SystemExit)
       end
     end
-    context 'to_hash' do
+    context '#to_hash' do
       before(:all) do
         @harmonize = Harmonize.new({
         :input => File.expand_path('spec/test_files/'),
@@ -173,7 +173,7 @@ RSpec.describe Harmonize do
         expect(@result[:cop]).to eq @harmonize.cop
       end
     end
-    context 'error' do
+    context '#error' do
       before(:all) do
         @harmonize = Harmonize.new
       end
@@ -184,7 +184,7 @@ RSpec.describe Harmonize do
 #           expect(@harmonize.error('test')).to eq @stderr.puts "[Harmonize] \033[0;31mtest\033[0m, \033[0;36mGame Over...\033[0m"
 #         end
     end
-    context 'pu' do
+    context '#pu' do
       before(:all) do
         @harmonize = Harmonize.new
       end
@@ -195,13 +195,32 @@ RSpec.describe Harmonize do
         expect(@harmonize.pu('test')).to eq $stderr.puts '[Harmonize] test'
       end
     end
-    context 'finish' do
-      before(:all) do
-        @harmonize = Harmonize.new({:launch => true, :output => File.expand_path('spec/test_output/')})
+    context '#finish' do
+      context 'with launch = true' do
+        before(:all) do
+          @harmonize = Harmonize.new({:launch => true, :output => File.expand_path('spec/test_output/')})
+        end
+        it 'should open the output folder' do
+          @harmonize.should_receive('exec').with("open #{File.expand_path('spec/test_output/')}/")
+          @harmonize.finish
+        end
       end
-      it 'should open the output folder' do
-        @harmonize.should_receive('exec').with("open #{File.expand_path('spec/test_output/')}/")
-        @harmonize.finish
+      context 'by default' do
+        before(:all) do
+          @harmonize = Harmonize.new
+        end
+        it 'should output to console only' do
+          expect(@harmonize.finish).to eq $stderr.puts "[Harmonize] Files \033[40;36m * Harmonized * \033[0m}"
+        end
+      end
+      
+    end
+    context '#types' do
+      before(:all) do
+        @harmonize = Harmonize.new
+      end
+      it 'should output to the console and exit' do
+        expect{@harmonize.types}.to raise_error(SystemExit)
       end
     end
   end
