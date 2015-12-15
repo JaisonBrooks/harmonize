@@ -53,7 +53,7 @@ Everything or '*'
 Performs a straight cut and paste, by moving all files and folders from your INPUT directory to your OUPUT directory. ***Note***, you must include a single quote at the beginning and end if you use the *.
 
 To view the latest, run ```harmonize types```.
-
+---
 ### Arguments
 ```ruby
 -i, --input FOLDER_PATH   :  Where to look for files ( Default: Current Directory )
