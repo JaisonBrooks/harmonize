@@ -10,7 +10,7 @@ So... Without further ado! Ladies and Gentleman, I present you with ***Harmonize
 ### Usage
 ```~:$ harmonize TYPES ARGUMENTS```
 
-You can view the ```-h``` to view the help page for more information on how to use Harmonize.
+You can view the help page by executing ```harmonize -h``` to learn more about how to use Harmonize.
 
 ### Types
 #### Standard
