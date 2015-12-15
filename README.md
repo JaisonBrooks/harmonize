@@ -96,7 +96,7 @@ The ```setup.sh``` will create a executable file and store it in => /usr/local/b
 ***Note***, Please ensure that /usr/local/bin is stored in your PATH!
 
 ## Disclaimer
-This script is new and could be considered **alpha** or **not fully* tested and could result in overwritten files, file corruption, script execution errors, bugs, random explosions and more. You have been warned! and by using this tool, you agree that I AM NOT responsible for lost or damange to your files.
+This script is new and could be considered **alpha** and/or ***not fully*** tested and could result in overwritten files, file corruption, script execution errors, bugs, random explosions and more. You have been warned and by using this tool, you agree that I (Jaison Brooks), am NOT responsible for any damage, misplacement or cooruption of your file(s) and or folder(s).
 
 ## Version
 0.6
