@@ -39,9 +39,9 @@ Archives
 ####Special
 ```
 All or all
- Desc: Specifying all, you telling harmonize to include all the default types and their cooresponding file extensions
+ Desc: Specifying all allow you to include all the default types and their cooresponding file extensions when looking up the files you want to harmonize.
 Everything or '*'
- Desc: Using the wildcard option will perform a straight cut and paste, moving all files and folders from your INPUT directory to your OUPUT directory.
+ Desc: Using this option will perform a straight cut and paste, moving all files and folders from your INPUT directory to your OUPUT directory.
 ```
 
 TYPES can be written as a single value (```harmonize pictures```) or as a comma seperated list (```harmonize 'pictures,movies,music'```). ***Note***, you need to include a single quote at the beginning and end of the comma seperated list. This also applyes for the Special Type (Everything), which allows you to use a wildcard (```harmonize '*'```) to perform a straight cut and paste of all files in the input directory to the specified output directory (```-o ~/FooBar```).
