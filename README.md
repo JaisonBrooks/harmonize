@@ -4,7 +4,7 @@ Let me ask you. How does your Downloads folder look? Is it unorganized, cluttere
 So... Without further ado! Ladies and Gentleman, I present you with ***Harmonize***
 
 ## About
-***Harmonize***, is a Ruby script that helps you organize your files by groups, like grouping your jpg and png files as photos and your pdf and doc files as documents and plenty more file extensions and grouping's. Take a look below for all supported groups and extensions. With plenty of easy to use command line options, this tool allows you to get alots of work done by just a simple command in Terminal.
+***Harmonize***, is a Ruby script that helps you organize your files by grouping them together into Types. For instance, it can group your jpg and png files as photos and your pdf and doc files as documents and plenty more file extensions and grouping's. Take a look below for all supported groups and extensions. With plenty of easy to use command line options, this tool allows you to get alots of work done by just a simple command in Terminal.
 
 Here is how the script is executed.
 
@@ -51,7 +51,9 @@ Special Types:
   EXTS: All files and folders
 ```
 
-Types can be used as a single value (```harmonize pictures```) or as a command seperated list (```harmonize 'pictures,movies,music'```). ***Note***, you need to include a single quotes at the beginning and end of a command seperate list of types or the wildcard type '*'.
+The TAGS above are other keywords you can use that refer to the same file type group. For Example if i executed ```harmonize pics```. This would execute the same as if you types ```harmonize pictures``` or even ```harmonize images```. The same goes for the other types and their tags.
+
+Types can be written as a single value (```harmonize pictures```) or as a comma seperated list (```harmonize 'pictures,movies,music'```). ***Note***, you need to include a single quote at the beginning and end of the comma seperated list. This also applyes for the Special Type (Everything), which allows you to use a wildcard (```harmonize '*'```) to perform a straight cut and paste of all files in the input directory to the specified output directory (```-o ~/FooBar```).
 
 ****Note**** - Run ```harmonize types``` to view latest types & supported file extensions
 ### Arguments
