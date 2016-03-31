@@ -175,7 +175,15 @@ class Harmonize
   
   # Move all files, similar to normal mv, will presever all files and folder structure
   def move_all
-    @pretend ? pu("Would have moved #{Harmonize.colorize('ALL','light purple')} files from #{Harmonize.colorize(@input,'light blue')} to #{Harmonize.colorize(@output,'light blue')}") : (@force ? FileUtils.mv(@input, @output, {:verbose => @verbose, :force => @force}) : FileUtils.mv(@input, @output, {:verbose => @verbose}))
+    if @pretend
+      pu("Would have moved #{Harmonize.colorize('ALL','light purple')} files from #{Harmonize.colorize(@input,'light blue')} to #{Harmonize.colorize(@output,'light blue')}")
+    else
+      if @force
+        FileUtils.mv(@input, @output, {:verbose => @verbose, :force => @force})
+      else
+        FileUtils.mv(@input, @output, {:verbose => @verbose})
+      end
+    end
   end
   
   # Show Tags with Extensions
@@ -230,7 +238,7 @@ class Harmonize
       if obj[:files].count === 0
          pu "No #{Harmonize.colorize(obj[:name],'light green')} to move" if @verbose
       else
-        output = @dry ? @output : "#{@output}#{pdir(obj[:name],true)}"
+        output = @dry ? @output : pdir("#{@output}#{obj[:name]}",true)
         fc=0
         obj[:files].each {|file|
           if @force
